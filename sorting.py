@@ -26,7 +26,6 @@ def insertion_sort(array, key=lambda a, b: a > b):
         return array
 
     for i in range(N - 1, 1, -1):
-        elem = array[i]
         i0, i1 = i, i - 1
         while key(array[i1], array[i0]):
             array[i0], array[i1] = (
@@ -34,10 +33,6 @@ def insertion_sort(array, key=lambda a, b: a > b):
                     )
 
     return array
-
-
-
-
 
 
 if __name__ == "__main__":

@@ -59,7 +59,6 @@ def selection_sort(array, key=_greater_than):
     return array
 
 
-
 if __name__ == "__main__":
 
     from numpy.random import permutation

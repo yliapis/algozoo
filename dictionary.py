@@ -78,14 +78,15 @@ class dictionary:
             raise KeyError("Key {} does not exist".format(key))
 
         root_node = self.table[idx]
+        prev_node = None
         node = root_node
         while node:
             if node.hash_id == hash_id:
                 if node is root_node:
                     self.table[idx] = None
-                    return
                 else:
                     prev_node.next = node.next
+                return
             else:
                 prev_node = node
                 node = node.next

@@ -2,8 +2,9 @@
 
 class _dict_node:
 
-    def __init__(self, hash_id, val, next=None):
+    def __init__(self, hash_id, key, val, next=None):
         self.hash_id = hash_id
+        self.key = key
         self.val = val
         self.next = None
 
@@ -27,7 +28,7 @@ class dictionary:
         idx = hash_id % self.size
 
         if self.table[idx] is None:
-            self.table[idx] = _dict_node(key, val)
+            self.table[idx] = _dict_node(hash_id, key, val)
         else:
             node = self.table[idx]
             while True:
@@ -41,7 +42,7 @@ class dictionary:
                 # if not, break and add it
                 else:
                     break
-            node.next = _dict_node(hash_id, val)
+            node.next = _dict_node(hash_id, key, val)
 
     def __getitem__(self, key):
 
@@ -81,7 +82,7 @@ class dictionary:
         prev_node = None
         node = root_node
         while node:
-            if node.hash_id == hash_id:
+            if node.key == key:
                 if node is root_node:
                     self.table[idx] = None
                 else:

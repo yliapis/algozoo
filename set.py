@@ -1,5 +1,4 @@
 
-
 class _set_node:
 
     def __init__(self, val, hash_id):
@@ -9,14 +8,18 @@ class _set_node:
         self.next = None
 
 
-class UnorderedSet:
+class Set:
 
-    def __init__(self, size=256, hash_function=hash):
+    def __init__(self, items=None, size=256, hash_function=hash):
 
         self.table = [None for _ in range(size)]
         self.hash_function = hash_function
         self.size = size
         self.cardinality = 0
+
+        if hasattr(items, '__iter__'):
+            for item in items:
+                self.add(item)
 
     def __iter__(self):
 
@@ -114,18 +117,47 @@ class UnorderedSet:
 
     def union(self, other_set):
 
+        new_set = Set(self)
+
         for val in other_set:
-            self.add(val)
+            new_set.add(val)
+
+        return new_set
 
     def difference(self, other_set):
+
+        new_set = Set(self)
 
         for val in other_set:
             self.remove(val)
 
+        return new_set
+
+    def intersection(self, other_set):
+
+        new_set = Set()
+        union = self.union(self, other_set)
+
+        for item in union:
+            if item in self and item in other_set:
+                new_set.add(item)
+
+        return new_set
+
+    def symmetric_difference(self, other_set):
+
+        new_set = self.union(self, other_set)
+
+        for item in new_set:
+            if item in self and item in other_set:
+                new_set.remove(item)
+
+        return new_set
+
 
 if __name__ == '__main__':
 
-    myset = UnorderedSet()
+    myset = Set()
 
     myset.add(3)
     myset.add(4)

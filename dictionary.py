@@ -10,7 +10,7 @@ class _dict_node:
         self.next = None
 
 
-class dictionary:
+class Dictionary:
 
     def __init__(self, size=256, hash_function=hash):
 
@@ -143,7 +143,7 @@ class dictionary:
 
 if __name__ == '__main__':
 
-    d = dictionary()
+    d = Dictionary()
     d[0] = 1
     print(d[0])
     d[0] = 3

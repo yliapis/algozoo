@@ -21,7 +21,6 @@ class dictionary:
 
     def __setitem__(self, key, val):
 
-        # Note: assuming no collisions in raw hash output
         try:
             hash_id = self.hash_function(key)
         except TypeError:
@@ -51,11 +50,10 @@ class dictionary:
 
     def __getitem__(self, key):
 
-        # Note: assuming no collisions in raw hash output
         try:
             hash_id = self.hash_function(key)
         except TypeError:
-            TypeError("Error: type {!r} is not hashable".format(key))
+            TypeError("Error: type {} is not hashable".format(type(key)))
 
         idx = hash_id % self.size
 
@@ -76,7 +74,7 @@ class dictionary:
         try:
             hash_id = self.hash_function(key)
         except TypeError:
-            TypeError("Error: type {!r} is not hashable".format(key))
+            TypeError("Error: type {} is not hashable".format(type(key)))
 
         idx = hash_id % self.size
 
@@ -139,7 +137,7 @@ class dictionary:
                 entry = entry.next
 
     def items(self):
-        
+
         return self.__iter__()
 
 

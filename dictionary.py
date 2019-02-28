@@ -3,6 +3,7 @@
 class _dict_node:
 
     def __init__(self, hash_id, key, val, next=None):
+
         self.hash_id = hash_id
         self.key = key
         self.val = val
@@ -16,6 +17,7 @@ class dictionary:
         self.table = [None for _ in range(size)]
         self.size = size
         self.hash_function = hash_function
+        self.cardinality = 0
 
     def __setitem__(self, key, val):
 
@@ -29,11 +31,13 @@ class dictionary:
 
         if self.table[idx] is None:
             self.table[idx] = _dict_node(hash_id, key, val)
+            self.cardinality += 1
         else:
             node = self.table[idx]
             while True:
-                # check if value has already been added
-                if node.hash_id == hash_id:
+                # check if value has already been added,
+                # and modify accordingly
+                if node.key == key:
                     node.val = val
                     return
                 # check if there is another node in the chain
@@ -43,6 +47,7 @@ class dictionary:
                 else:
                     break
             node.next = _dict_node(hash_id, key, val)
+            self.cardinality += 1
 
     def __getitem__(self, key):
 
@@ -87,12 +92,55 @@ class dictionary:
                     self.table[idx] = None
                 else:
                     prev_node.next = node.next
+                self.cardinality -= 1
                 return
             else:
                 prev_node = node
                 node = node.next
 
         raise KeyError("Key {} does not exist".format(key))
+
+    def __iter__(self):
+
+        for entry in self.table:
+            while entry:
+                yield entry.key, entry.val
+                entry = entry.next
+
+    def __len__(self):
+
+        return self.cardinality
+
+    def __repr__(self):
+
+        dict_items = ["{!r}: {!r}".format(key, val) for key, val
+                      in self]
+
+        dict_str = '{' + ", ".join(dict_items) + '}'
+
+        return dict_str
+
+    def __str__(self):
+
+        return self.__repr__()
+
+    def keys(self):
+
+        for entry in self.table:
+            while entry:
+                yield entry.key
+                entry = entry.next
+
+    def values(self):
+
+        for entry in self.table:
+            while entry:
+                yield entry.val
+                entry = entry.next
+
+    def items(self):
+        
+        return self.__iter__()
 
 
 if __name__ == '__main__':
@@ -105,3 +153,7 @@ if __name__ == '__main__':
     print(d[0])
     print(d[2])
     del d[2]
+
+    print()
+    print(d)
+    print(len(d))

@@ -14,10 +14,41 @@ class _tree_node:
 
 class BST:
 
-    def __init__(self, comparator=_greater_than):
+    def __init__(self, items=None, comparator=_greater_than):
 
         self.root = None
         self.comparator = comparator
+
+        if hasattr(items, '__iter__'):
+            for item in items:
+                self.insert(item)
+        elif items is not None:
+            raise Exception("items={} is not iterable".format(items))
+
+    def __iter__(self, node="root"):
+        """ DFS iteration """
+        
+        if node == "root":
+            node = self.root
+
+        if node:
+
+            if node.left:
+                for val in self.__iter__(node.left):
+                    yield val
+
+            yield node.val
+
+            if node.right:
+                for val in self.__iter__(node.right):
+                    yield val
+    
+    def __str__(self):
+
+        bst_str = ', '.join([repr(item) for item in self])
+        bst_str = "BST({})".format(bst_str)
+
+        return bst_str
 
     def insert(self, val, node=None):
 
@@ -28,7 +59,7 @@ class BST:
         if node is None:
             node = self.root
 
-        if self.comarator(val, node.val):
+        if self.comparator(val, node.val):
             if node.right is None:
                 node.right = _tree_node(val)
             else:
@@ -59,3 +90,14 @@ class BST:
                 return False
             else:
                 self.search(node.left)
+
+
+if __name__ == '__main__':
+
+    items = [1, 3, 2, 5 ,4, 9]
+
+    tree = BST(items)
+
+    print(tree)
+
+

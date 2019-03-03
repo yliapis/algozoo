@@ -52,14 +52,13 @@ def selection_sort(array, key=_greater_than):
         return array
 
     for i in range(N - 1):
-        base_idx = i
-        min_idx = 0
-        for j in range(i, N):
-            if not key(array[i], array[j]):
+        min_elem = array[i]
+        min_idx = i
+        for j in range(i + 1, N):
+            if key(min_elem, array[j]):
+                min_elem = array[j]
                 min_idx = j
-        array[base_idx], array[min_idx] = (
-                    array[base_idx], array[min_idx]
-                    )
+        array[i], array[min_idx] = array[min_idx], array[i]
 
     return array
 
@@ -67,7 +66,7 @@ def selection_sort(array, key=_greater_than):
 def quick_sort(array, key=_greater_than):
     """ Implementation of quicksort
 
-    pivot chosen as first element
+    pivot chosen as first element for now
     """
 
     N = len(array)
@@ -109,11 +108,15 @@ def _main():
     shuffle(arr)
     print("shuffled\n", arr, '\n', sep='')
 
+    print("baseline")
     print(sorted(arr[:]))
+    print("bubble_sort")
     print(bubble_sort(arr[:]))
+    print("insertion_sort")
     print(insertion_sort(arr[:]))
+    print("selection_sort")
     print(selection_sort(arr[:]))
-    print()
+    print("quick_sort")
     print(quick_sort(arr[:]))
 
     print()

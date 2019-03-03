@@ -34,12 +34,14 @@ def insertion_sort(array, key=_greater_than):
     if N <= 1:
         return array
 
-    for i in range(N - 1, 1, -1):
+    for i in range(1, N):
         i0, i1 = i, i - 1
-        while key(array[i1], array[i0]):
+        while (key(array[i1], array[i0]) and
+               i0 >= 0):
             array[i0], array[i1] = (
                     array[i1], array[i0]
                     )
+            i0, i1 = i0 - 1, i1 - 1
 
     return array
 

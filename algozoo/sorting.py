@@ -59,13 +59,37 @@ def selection_sort(array, key=_greater_than):
     return array
 
 
+def quick_sort(array, key=_greater_than):
+    """ Implementation of quicksort
+
+    pivot chosen as first element
+    """
+
+    N = len(array)
+
+    if N <= 1:
+        return array
+
+    pivot = array[1]
+
+    greater_arr, lesser_arr = [], []
+
+
+
+
+    pass
+
+
 if __name__ == "__main__":
 
-    from numpy.random import permutation
+    from random import shuffle
 
-    arr = permutation(20)
+    arr = list(range(20))
 
-    print(arr)
+    print("true\n", arr, sep='')
+    shuffle(arr)
+    print("shuffled\n", arr, '\n', sep='')
+
     print(sorted(arr))
     print(bubble_sort(arr))
     print(insertion_sort(arr))

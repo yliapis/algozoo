@@ -36,8 +36,8 @@ class Set:
 
     def __repr__(self):
 
-        set_string = ', '.join([repr(val) for val in self])
-        set_string = 'Set(' + set_string + ')'
+        set_string = ", ".join([repr(val) for val in self])
+        set_string = "Set(" + set_string + ")"
 
         return set_string
 

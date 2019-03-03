@@ -114,7 +114,7 @@ class Dictionary:
         dict_items = ["{!r}: {!r}".format(key, val) for key, val
                       in self]
 
-        dict_str = 'Dictionary(' + ", ".join(dict_items) + ')'
+        dict_str = "Dictionary(" + ", ".join(dict_items) + ")"
 
         return dict_str
 

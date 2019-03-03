@@ -27,7 +27,7 @@ class BST:
 
     def __iter__(self, node="root"):
         """ DFS iteration """
-        
+
         if node == "root":
             node = self.root
 
@@ -42,7 +42,7 @@ class BST:
             if node.right:
                 for val in self.__iter__(node.right):
                     yield val
-    
+
     def __str__(self):
 
         bst_str = ', '.join([repr(item) for item in self])
@@ -94,10 +94,8 @@ class BST:
 
 if __name__ == '__main__':
 
-    items = [1, 3, 2, 5 ,4, 9]
+    items = [1, 3, 2, 5, 4, 9]
 
     tree = BST(items)
 
     print(tree)
-
-

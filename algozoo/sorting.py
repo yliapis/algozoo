@@ -1,7 +1,12 @@
 
 
+#: comparator functions
+
 def _greater_than(a, b):
     return a > b
+
+
+#: sorting functions
 
 
 def bubble_sort(array, key=_greater_than):
@@ -70,27 +75,49 @@ def quick_sort(array, key=_greater_than):
     if N <= 1:
         return array
 
-    pivot = array[1]
+    pivot_idx = 0
+    pivot = array[pivot_idx]
+    array[0], array[pivot_idx] = array[pivot_idx], array[0]
 
-    greater_arr, lesser_arr = [], []
+    k = 1
+    ptr = N - 1
+    for _ in range(1, N):
+        # element is greater than pivot
+        if key(array[k], pivot):
+            array[k], array[ptr] = array[ptr], array[k]
+            ptr -= 1
+        # element is less than pivot
+        else:
+            k += 1
+
+    array = quick_sort(array[1:k]) + [pivot] + quick_sort(array[k:])
+
+    return array
+
+#: for testing
 
 
-
-
-    pass
-
-
-if __name__ == "__main__":
+def _main():
 
     from random import shuffle
 
     arr = list(range(20))
 
+    print()
+
     print("true\n", arr, sep='')
     shuffle(arr)
     print("shuffled\n", arr, '\n', sep='')
 
-    print(sorted(arr))
-    print(bubble_sort(arr))
-    print(insertion_sort(arr))
-    print(selection_sort(arr))
+    print(sorted(arr[:]))
+    print(bubble_sort(arr[:]))
+    print(insertion_sort(arr[:]))
+    print(selection_sort(arr[:]))
+    print()
+    print(quick_sort(arr[:]))
+
+    print()
+
+
+if __name__ == "__main__":
+    _main()

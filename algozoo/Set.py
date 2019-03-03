@@ -1,4 +1,8 @@
 
+
+#: Node def
+
+
 class _set_node:
 
     def __init__(self, val, hash_id):
@@ -6,6 +10,9 @@ class _set_node:
         self.hash_id = None
         self.val = val
         self.next = None
+
+
+#: Set def
 
 
 class Set:
@@ -157,7 +164,10 @@ class Set:
         return new_set
 
 
-if __name__ == '__main__':
+#: for testing
+
+
+def _main():
 
     myset = Set()
 
@@ -174,3 +184,8 @@ if __name__ == '__main__':
         myset.remove(i)
 
     print(myset)
+
+
+if __name__ == '__main__':
+
+    _main()

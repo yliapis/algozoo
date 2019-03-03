@@ -1,4 +1,8 @@
 
+
+#: Node def
+
+
 class _bag_node:
 
     def __init__(self, val, hash_id):
@@ -7,6 +11,9 @@ class _bag_node:
         self.val = val
         self.count = 1
         self.next = None
+
+
+#: Bag def
 
 
 class Bag:
@@ -166,7 +173,10 @@ class Bag:
         # return new_bag
 
 
-if __name__ == '__main__':
+#: for testing
+
+
+def _main():
 
     mybag = Bag()
 
@@ -186,3 +196,8 @@ if __name__ == '__main__':
         mybag.remove(i)
 
     print(mybag)
+
+
+if __name__ == '__main__':
+
+    _main()

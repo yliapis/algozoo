@@ -1,7 +1,13 @@
 
 
+#: comparators
+
+
 def _greater_than(a, b):
     return a > b
+
+
+#: Node def
 
 
 class _tree_node:
@@ -10,6 +16,9 @@ class _tree_node:
         self.val = val
         self.left = None
         self.right = None
+
+
+#: Tree def
 
 
 class BST:
@@ -92,10 +101,18 @@ class BST:
                 self.search(node.left)
 
 
-if __name__ == '__main__':
+#: for testing
+
+
+def _main():
 
     items = [1, 3, 2, 5, 4, 9]
 
     tree = BST(items)
 
     print(tree)
+
+
+if __name__ == '__main__':
+
+    _main()

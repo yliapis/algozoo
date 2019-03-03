@@ -1,5 +1,8 @@
 
 
+#: Node def
+
+
 class _dict_node:
 
     def __init__(self, hash_id, key, val, next=None):
@@ -8,6 +11,9 @@ class _dict_node:
         self.key = key
         self.val = val
         self.next = None
+
+
+#: Dictionary def
 
 
 class Dictionary:
@@ -141,7 +147,10 @@ class Dictionary:
         return self.__iter__()
 
 
-if __name__ == '__main__':
+#: for testing
+
+
+def _main():
 
     d = Dictionary()
     d[0] = 1
@@ -155,3 +164,8 @@ if __name__ == '__main__':
     print()
     print(d)
     print(len(d))
+
+
+if __name__ == '__main__':
+
+    _main()

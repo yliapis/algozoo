@@ -95,6 +95,34 @@ def quick_sort(array, key=_greater_than):
 
     return array
 
+
+def merge_sort(array, key=_greater_than):
+    """ Top down merge sort """
+    
+    N = len(array)
+
+    if N <= 1:
+        return array
+
+    lower = merge_sort(array[:N//2])
+    upper = merge_sort(array[N//2:])
+
+    # merge both sublists
+    sorted_array = []
+    while lower and upper:
+        if key(upper[0], lower[0]):
+            sorted_array.append(lower.pop(0))
+        else:
+            sorted_array.append(upper.pop(0))
+
+    if lower:
+        sorted_array.extend(lower)
+    if upper:
+        sorted_array.extend(upper)
+
+    return sorted_array
+
+
 #: for testing
 
 
@@ -120,6 +148,8 @@ def _main():
     print(selection_sort(arr[:]))
     print("quick_sort")
     print(quick_sort(arr[:]))
+    print("merge_sort")
+    print(merge_sort(arr[:]))
 
     print()
 

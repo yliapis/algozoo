@@ -98,7 +98,7 @@ def quick_sort(array, key=_greater_than):
 
 def merge_sort(array, key=_greater_than):
     """ Top down merge sort """
-    
+
     N = len(array)
 
     if N <= 1:

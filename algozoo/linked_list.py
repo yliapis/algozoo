@@ -71,18 +71,16 @@ class _base:
 class SinglyLinkedList(_base):
 
     def get(self, pos=0):
-        
+
         if pos < 0:
             raise Exception("pos={!r} must be greater than 0: ".format(pos))
 
         if not self.head:
             return None
 
-        prev = None
         node = self.head
         depth = 0
         while node.next and depth < pos:
-            prev = node
             node = node.next
             depth += 1
 

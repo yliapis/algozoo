@@ -20,7 +20,7 @@ class _double_node:
         self.next = next
 
 
-#: list defs
+#: base class
 
 
 class _base:
@@ -82,6 +82,9 @@ class _base:
     def remove(self, pos=0):
 
         raise NotImplementedError()
+
+
+#: class defs
 
 
 class SinglyLinkedList(_base):
@@ -273,7 +276,7 @@ def _test_sll():
     sll.insert(-1, 3)
     sll.insert(-1, -1)
     sll.insert(-2, sll.count - 1)
-    # sll.insert(-1, sll.count)
+    sll.insert(-3, sll.count)
 
     print(sll)
     print(sll.get())

@@ -110,10 +110,10 @@ class Queue(_base):
         self._push_end(val)
 
     def dequeue(self, val):
-        return self.pop_start()
+        return self._pop_start()
 
     def peak(self):
-        return self.peak_start()
+        return self._peak_start()
 
 
 #: for testing

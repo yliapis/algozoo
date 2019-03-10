@@ -79,10 +79,10 @@ class SinglyLinkedList(_base):
             return None
 
         node = self.head
-        depth = 0
-        while node.next and depth < pos:
+        ptr = 0
+        while node.next and ptr < pos:
             node = node.next
-            depth += 1
+            ptr += 1
 
         return node.val
 
@@ -99,11 +99,11 @@ class SinglyLinkedList(_base):
 
         prev = None
         node = self.head
-        depth = 0
-        while node.next and depth < pos:
+        ptr = 0
+        while node.next and ptr < pos:
             prev = node
             node = node.next
-            depth += 1
+            ptr += 1
 
         if prev is None:
             self.head = _single_node(val, next=node)
@@ -124,11 +124,11 @@ class SinglyLinkedList(_base):
 
         prev = None
         node = self.head
-        depth = 0
-        while node.next and depth < pos:
+        ptr = 0
+        while node.next and ptr < pos:
             prev = node
             node = node.next
-            depth += 1
+            ptr += 1
 
         if prev is None:
             self.head = self.head.next
@@ -138,7 +138,25 @@ class SinglyLinkedList(_base):
 
 def DoublyLinkedList(_base):
 
-    pass
+    def get(self, pos=0):
+
+        if not self.head:
+            return None
+
+        if pos >= 0:
+            ptr = 0
+            node = self.head
+            while node.next and ptr < pos:
+                node = node.next
+                ptr += 1
+        else:
+            ptr = -1
+            node = self.tail
+            while node.prev and ptr > pos:
+                node = node.prev
+                ptr -= 1
+
+        return node.val
 
 
 #: for testing

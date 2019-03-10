@@ -1,6 +1,6 @@
 
 
-#: Node devs
+#: Node defs
 
 
 class _single_node:

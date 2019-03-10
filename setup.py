@@ -12,7 +12,7 @@ with open('README.md', 'r') as readme_file:
 # Setup
 setup(name='algozoo',
       version='0.1',
-      description='Basic Algorithms and Data Structures',
+      description='Classic Algorithms and Data Structures',
       long_description=README_TEXT,
       author='Yannis Liapis',
       author_email='yliapis44@gmail.com',

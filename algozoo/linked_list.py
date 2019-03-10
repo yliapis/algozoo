@@ -23,7 +23,7 @@ class _double_node:
 #: base class
 
 
-class _base:
+class _BaseLinkedList:
 
     def __init__(self, items=None):
 
@@ -87,7 +87,7 @@ class _base:
 #: class defs
 
 
-class SinglyLinkedList(_base):
+class SinglyLinkedList(_BaseLinkedList):
 
     def get(self, pos=0):
 
@@ -171,7 +171,7 @@ class SinglyLinkedList(_base):
             prev.next = node.next
 
 
-def DoublyLinkedList(_base):
+def DoublyLinkedList(_BaseLinkedList):
 
     def get(self, pos=0):
 
@@ -292,7 +292,32 @@ def _test_sll():
 
 def _test_dll():
 
-    pass
+    print("Testing DoublyLinkedList")
+
+    dll = DoublyLinkedList(range(9))
+
+    print(dll)
+
+    dll.remove()
+    dll.remove(2)
+
+    dll.insert(-1)
+    dll.insert(-2, 1)
+    dll.insert(-1, 3)
+    dll.insert(-1, -1)
+    dll.insert(-2, dll.count - 1)
+    dll.insert(-3, dll.count)
+
+    print(dll)
+    print(dll.get())
+    print(dll.get(4))
+    print(dll.get(-1))
+
+    dll.remove()
+    dll.remove(-2)
+    print(dll)
+
+    print()
 
 
 def _main():

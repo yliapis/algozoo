@@ -171,7 +171,7 @@ class SinglyLinkedList(_BaseLinkedList):
             prev.next = node.next
 
 
-def DoublyLinkedList(_BaseLinkedList):
+class DoublyLinkedList(_BaseLinkedList):
 
     def get(self, pos=0):
 
@@ -222,39 +222,64 @@ def DoublyLinkedList(_BaseLinkedList):
             return
 
         if pos >= 0:
-
             prev = None
             node = self.head
             ptr = 0
             while node.next and ptr < pos:
                 prev = node
                 node = node.next
-                ptr += 1
-
-            if prev is None:
-                self.head = _double_node(val, next=node)
-                node.prev = self.head
-            elif node.next:
-                prev.next = _double_node(val, prev=prev, next=node)
-
+                ptr += 1    
         else:
-
-            next = None
             node = self.tail
             ptr = -1
             while node and ptr > pos:
-                next = node
                 node = node.prev
                 ptr -= 1
 
-            if next is None:
-                self.tail = _double_node(val, prev=node)
-                node.next = self.tail
-            elif node:
-                node.prev.next = _double_node(val, prev=node.prev, next=next)
+        # break down into cases and insert node
+        if pos == 0 or pos + self.count < 0:
+            new_node = self.head = _double_node(val, next=node)
+            node.prev = new_node
+        else:
+            new_node = _double_node(val, prev=node, next=node.next)
+            if node.next:
+                node.next = node.next.prev = new_node
             else:
-                self.head = _double_node(val, next=next)
-                next.prev = self.head
+                self.tail = node.next = new_node
+
+    def remove(self, pos=0):
+
+        if not self.head:
+            return
+
+        self.count += -1
+
+        # find node to be removed
+        if pos >= 0:
+            node = self.head
+            ptr = 0
+            while node.next and ptr < pos:
+                node = node.next
+                ptr += 1
+        else:
+            node = self.tail
+            ptr = -1
+            while node and ptr > pos:
+                node = node.prev
+                ptr -= 1
+
+        # break down into cases and remove node
+        if node.prev and node.next:
+            node.next.prev = node.prev
+            node.prev.next = node.next
+        elif not node.prev and node.next:
+            self.head = node.next
+            node.next.prev = None
+        elif node.prev and not node.next:
+            self.tail = node.prev
+            node.prev.next = None
+        else:
+            self.head = self.tail = None
 
 
 #: for testing

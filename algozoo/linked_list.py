@@ -238,8 +238,7 @@ class DoublyLinkedList(_BaseLinkedList):
 
         # break down into cases and insert node
         if pos == 0 or pos + self.count < 0:
-            new_node = self.head = _double_node(val, next=node)
-            node.prev = new_node
+             self.head = node.prev = _double_node(val, next=node)
         else:
             new_node = _double_node(val, prev=node, next=node.next)
             if node.next:
@@ -257,21 +256,19 @@ class DoublyLinkedList(_BaseLinkedList):
         # find node to be removed
         if pos >= 0:
             node = self.head
-            ptr = 1
+            ptr = 0
             while node.next and ptr < pos:
                 node = node.next
                 ptr += 1
         else:
             node = self.tail
             ptr = -1
-            while node and ptr > pos:
+            while node.prev and ptr > pos:
                 node = node.prev
                 ptr -= 1
 
         # break down into cases and remove node
-        if pos == 0 or pos + self.count < 0:
-            self.head = node.next
-        elif node.prev and node.next:
+        if node.prev and node.next:
             node.next.prev = node.prev
             node.prev.next = node.next
         elif not node.prev and node.next:
@@ -312,7 +309,7 @@ def _test_sll():
 
     sll.remove()
     sll.remove(-2)
-    print(sll)
+    print(sll, len(sll), len(list(sll)))
 
     print()
 
@@ -340,9 +337,14 @@ def _test_dll():
     print(dll.get(4))
     print(dll.get(-1))
 
+    dll0 = DoublyLinkedList(list(dll)[::-1])
+
+    # import pdb; pdb.set_trace()
+    # print(dll, len(dll), len(list(dll)))
     dll.remove()
+    # print(dll, len(dll), len(list(dll)))
     dll.remove(-2)
-    print(dll)
+    print(dll, len(dll), len(list(dll)))
 
     print()
 

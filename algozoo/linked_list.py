@@ -224,7 +224,7 @@ class DoublyLinkedList(_BaseLinkedList):
         if pos >= 0:
             prev = None
             node = self.head
-            ptr = 0
+            ptr = 1
             while node.next and ptr < pos:
                 prev = node
                 node = node.next
@@ -269,7 +269,9 @@ class DoublyLinkedList(_BaseLinkedList):
                 ptr -= 1
 
         # break down into cases and remove node
-        if node.prev and node.next:
+        if pos == 0 or pos + self.count < 0:
+            self.head = node.next
+        elif node.prev and node.next:
             node.next.prev = node.prev
             node.prev.next = node.next
         elif not node.prev and node.next:

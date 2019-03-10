@@ -257,9 +257,9 @@ def DoublyLinkedList(_base):
 #: for testing
 
 
-def _main():
+def _test_sll():
 
-    print()
+    print("Testing SinglyLinkedList")
 
     sll = SinglyLinkedList(range(9))
 
@@ -283,6 +283,21 @@ def _main():
     sll.remove()
     sll.remove(-2)
     print(sll)
+
+    print()
+
+
+def _test_dll():
+
+    pass
+
+
+def _main():
+
+    print()
+
+    _test_sll()
+    _test_dll()
 
     print()
 

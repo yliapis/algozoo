@@ -43,6 +43,14 @@ class _base:
             yield node.val
             node = node.next
 
+    def __getitem__(self, pos):
+
+        return self.get(pos)
+
+    def __setitem__(self, val, pos):
+
+        self.set(val, pos)
+
     def __len__(self):
 
         return self.count
@@ -55,7 +63,15 @@ class _base:
 
         return repr_str
 
+    def __str__(self):
+
+        return repr(self)
+
     def get(self, pos=0):
+
+        raise NotImplementedError()
+
+    def set(self, val, pos=0):
 
         raise NotImplementedError()
 
@@ -73,7 +89,7 @@ class SinglyLinkedList(_base):
     def get(self, pos=0):
 
         if pos < 0:
-            raise Exception("pos={!r} must be greater than 0: ".format(pos))
+            pos += self.count
 
         if not self.head:
             return None
@@ -86,10 +102,26 @@ class SinglyLinkedList(_base):
 
         return node.val
 
+    def set(self, val, pos=0): 
+
+        if pos < 0:
+            pos += self.count
+
+        if not self.head:
+            return None
+
+        node = self.head
+        ptr = 0
+        while node.next and ptr < pos:
+            node = node.next
+            ptr += 1
+
+        node.val = val
+
     def insert(self, val, pos=0):
 
         if pos < 0:
-            raise Exception("pos={!r} must be greater than 0: ".format(pos))
+            pos += self.count + 1
 
         self.count += 1
 
@@ -100,7 +132,7 @@ class SinglyLinkedList(_base):
         prev = None
         node = self.head
         ptr = 0
-        while node.next and ptr < pos:
+        while node and ptr < pos:
             prev = node
             node = node.next
             ptr += 1
@@ -113,7 +145,7 @@ class SinglyLinkedList(_base):
     def remove(self, pos=0):
 
         if pos < 0:
-            raise Exception("pos={!r} must be greater than 0: ".format(pos))
+            pos += self.count
 
         if not self.head:
             return
@@ -158,6 +190,69 @@ def DoublyLinkedList(_base):
 
         return node.val
 
+    def set(self, val, pos=0):
+
+        if not self.head:
+            return None
+
+        if pos >= 0:
+            ptr = 0
+            node = self.head
+            while node.next and ptr < pos:
+                node = node.next
+                ptr += 1
+        else:
+            ptr = -1
+            node = self.tail
+            while node.prev and ptr > pos:
+                node = node.prev
+                ptr -= 1
+
+        node.val = val
+
+    def insert(self, val, pos=0):
+
+        self.count += 1
+
+        if not self.head:
+            self.head = self.tail = _double_node(val)
+            return
+
+        if pos >= 0:
+
+            prev = None
+            node = self.head
+            ptr = 0
+            while node.next and ptr < pos:
+                prev = node
+                node = node.next
+                ptr += 1
+
+            if prev is None:
+                self.head = _double_node(val, next=node)
+                node.prev = self.head
+            elif node.next:
+                prev.next = _double_node(val, prev=prev, next=node)
+
+        else:
+
+            next = None
+            node = self.tail
+            ptr = -1
+            while node and ptr > pos:
+                next = node
+                node = node.prev
+                ptr -= 1
+
+            if next is None:
+                self.tail = _double_node(val, prev=node)
+                node.next = self.tail
+            elif node:
+                node.prev.next = _double_node(val, prev=node.prev, next=next)
+            else:
+                self.head = _double_node(val, next=next)
+                next.prev = self.head
+
 
 #: for testing
 
@@ -174,11 +269,20 @@ def _main():
     sll.remove(2)
 
     sll.insert(-1)
+    sll.insert(-2, 1)
     sll.insert(-1, 3)
+    sll.insert(-1, -1)
+    sll.insert(-2, sll.count - 1)
+    # sll.insert(-1, sll.count)
 
     print(sll)
     print(sll.get())
     print(sll.get(4))
+    print(sll.get(-1))
+
+    sll.remove()
+    sll.remove(-2)
+    print(sll)
 
     print()
 

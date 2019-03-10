@@ -18,4 +18,4 @@ setup(name='algozoo',
       author_email='yliapis44@gmail.com',
       url='https://github.com/yliapis/algozoo',
       packages=['algozoo'],
-     )
+      )

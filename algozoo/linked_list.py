@@ -293,6 +293,7 @@ class DoublyLinkedList(_BaseLinkedList):
 
         self.head, self.tail = tail, head
 
+
 #: for testing
 
 
@@ -325,14 +326,6 @@ def _test_sll():
 
     print()
 
-
-def debug(ll):
-    print("debug", ll)
-    len1 = len(ll)
-    ll.reverse()
-    len2 = len(ll)
-    assert len1 == len2
-    ll.reverse
 
 def _test_dll():
 

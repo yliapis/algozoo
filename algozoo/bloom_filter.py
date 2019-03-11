@@ -29,8 +29,8 @@ class BloomFilter:
 
         bit_list = []
         for hash_id in hashes:
-            idx = hash_id % (self.size << 8)
-            table_idx = idx >> 8
+            idx = hash_id % (self.size << 3)
+            table_idx = idx >> 3
             bit = 1 << (idx & 7)  # 7 = b'111'
             bit_list.append((table_idx, bit))
 

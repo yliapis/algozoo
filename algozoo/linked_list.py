@@ -242,7 +242,7 @@ class DoublyLinkedList(_BaseLinkedList):
         else:
             new_node = _double_node(val, prev=node, next=node.next)
             if node.next:
-                node.next = node.next.prev = new_node
+                node.next.prev = node.next = new_node
             else:
                 self.tail = node.next = new_node
 
@@ -280,6 +280,18 @@ class DoublyLinkedList(_BaseLinkedList):
         else:
             self.head = self.tail = None
 
+    def reverse(self):
+
+        node = self.head
+
+        head = self.head
+        tail = self.tail
+
+        while node:
+            node.prev, node.next = node.next, node.prev
+            node = node.prev
+
+        self.head, self.tail = tail, head
 
 #: for testing
 
@@ -314,23 +326,42 @@ def _test_sll():
     print()
 
 
+def debug(ll):
+    print("debug", ll)
+    len1 = len(ll)
+    ll.reverse()
+    len2 = len(ll)
+    assert len1 == len2
+    ll.reverse
+
 def _test_dll():
 
     print("Testing DoublyLinkedList")
 
     dll = DoublyLinkedList(range(9))
 
-    print(dll)
+    debug(dll)
 
     dll.remove()
+
+    debug(dll)
+
     dll.remove(2)
+    debug(dll)
+
 
     dll.insert(-1)
+    debug(dll)
     dll.insert(-2, 1)
+    debug(dll)
     dll.insert(-1, 3)
+    debug(dll)
     dll.insert(-1, -1)
+    debug(dll)
     dll.insert(-2, dll.count - 1)
+    debug(dll)
     dll.insert(-3, dll.count)
+    debug(dll)
 
     print(dll)
     print(dll.get())
@@ -338,11 +369,10 @@ def _test_dll():
     print(dll.get(-1))
 
     dll0 = DoublyLinkedList(list(dll)[::-1])
-
-    # import pdb; pdb.set_trace()
     # print(dll, len(dll), len(list(dll)))
     dll.remove()
     # print(dll, len(dll), len(list(dll)))
+    # import pdb; pdb.set_trace()
     dll.remove(-2)
     print(dll, len(dll), len(list(dll)))
 

@@ -340,39 +340,24 @@ def _test_dll():
 
     dll = DoublyLinkedList(range(9))
 
-    debug(dll)
+    print(dll)
 
     dll.remove()
-
-    debug(dll)
-
     dll.remove(2)
-    debug(dll)
-
 
     dll.insert(-1)
-    debug(dll)
     dll.insert(-2, 1)
-    debug(dll)
     dll.insert(-1, 3)
-    debug(dll)
     dll.insert(-1, -1)
-    debug(dll)
     dll.insert(-2, dll.count - 1)
-    debug(dll)
     dll.insert(-3, dll.count)
-    debug(dll)
 
     print(dll)
     print(dll.get())
     print(dll.get(4))
     print(dll.get(-1))
 
-    dll0 = DoublyLinkedList(list(dll)[::-1])
-    # print(dll, len(dll), len(list(dll)))
     dll.remove()
-    # print(dll, len(dll), len(list(dll)))
-    # import pdb; pdb.set_trace()
     dll.remove(-2)
     print(dll, len(dll), len(list(dll)))
 

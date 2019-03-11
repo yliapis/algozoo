@@ -105,7 +105,7 @@ class SinglyLinkedList(_BaseLinkedList):
 
         return node.val
 
-    def set(self, val, pos=0): 
+    def set(self, val, pos=0):
 
         if pos < 0:
             pos += self.count
@@ -222,13 +222,11 @@ class DoublyLinkedList(_BaseLinkedList):
             return
 
         if pos >= 0:
-            prev = None
             node = self.head
             ptr = 1
             while node.next and ptr < pos:
-                prev = node
                 node = node.next
-                ptr += 1    
+                ptr += 1
         else:
             node = self.tail
             ptr = -1
@@ -238,7 +236,7 @@ class DoublyLinkedList(_BaseLinkedList):
 
         # break down into cases and insert node
         if pos == 0 or pos + self.count < 0:
-             self.head = node.prev = _double_node(val, next=node)
+            self.head = node.prev = _double_node(val, next=node)
         else:
             new_node = _double_node(val, prev=node, next=node.next)
             if node.next:

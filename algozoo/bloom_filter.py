@@ -70,8 +70,8 @@ def _main():
     print()
 
     for i in range(10):
-        print("{val} is {msg}in set".format(val=i,
-                msg=("" if i in bf else "not ")))
+        msg = "" if i in bf else "not "
+        print("{val} is {msg}in set".format(val=i, msg=msg))
 
     print()
 
@@ -79,4 +79,3 @@ def _main():
 if __name__ == '__main__':
 
     _main()
-

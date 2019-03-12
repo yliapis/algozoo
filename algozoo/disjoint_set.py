@@ -136,7 +136,6 @@ class DisjointSet(NumberedDisjointSet):
         return super().is_disjoint(id_a, id_b)
 
 
-
 #: for testing
 
 
@@ -184,7 +183,7 @@ def _main():
     _test_nds()
 
     print()
-    
+
     _test_ds()
 
     print()

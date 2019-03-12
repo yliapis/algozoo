@@ -2,6 +2,7 @@
 
 #: class def
 
+
 class BloomFilter:
 
     def __init__(self, items=None, size=128, k=1):
@@ -21,11 +22,14 @@ class BloomFilter:
         elif items is not None:
             raise Exception("items={} is not iterable".format(items))
 
+    def _hash(self, val):
+        return hash(val)
+
     def _get_bit_list(self, val):
 
         hashes = [hash(val)]
         for i in range(self.k - 1):
-            hashes.append(hashes[i])
+            hashes.append(self._hash(hashes[i]))
 
         bit_list = []
         for hash_id in hashes:

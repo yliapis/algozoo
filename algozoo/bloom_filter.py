@@ -12,7 +12,7 @@ class BloomFilter:
         if k < 1:
             raise Exception("Error: you must have at least 1"
                             "hash function, and k={k} was"
-                            "specified".format(k))
+                            "specified".format(k=k))
         self.k = k
 
         if hasattr(items, '__iter__'):

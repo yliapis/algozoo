@@ -29,10 +29,9 @@ class NumberedDisjointSet(object):
         # need to perform a groupby root to separate subsets
         self.flatten_table()
 
-        table = self.table[:]
         lut = defaultdict(list)
 
-        for i, root in enumerate(table):
+        for i, root in enumerate(self.table):
             lut[root].append(i)
 
         subset_strings = []
@@ -50,19 +49,17 @@ class NumberedDisjointSet(object):
 
         return repr(self)
 
-    def add(self, val):
-        # should be initialized at class construction
-        raise NotImplementedError()
-
     def union(self, a, b):
 
         self.flattened = False
 
         # assume both values are already initialized
-        if a < b:
-            self.table[b] = a
-        else:
-            self.table[a] = b
+        root_a, root_b = self.table[a], self.table[b]
+        root = min(*(a, b, root_a, root_b))
+        self.table[a] = root
+        self.table[b] = root
+        self.table[root_a] = root
+        self.table[root_b] = root
 
     def flatten(self, val):
 
@@ -91,10 +88,59 @@ class NumberedDisjointSet(object):
         return not self.is_disjoint(a, b)
 
 
+class DisjointSet(NumberedDisjointSet):
+
+    def __init__(self, items):
+
+        if hasattr(items, '__iter__'):
+            self.lut = {item: i for i, item in enumerate(items)}
+        elif items is None:
+            self.lut = dict()
+        else:
+            raise Exception("items={} is not iterable".format(items))
+
+        N = len(self.lut)
+
+        super().__init__(N)
+
+    def __contains__(self, val):
+        return val in self.lut
+
+    def __repr__(self):
+
+        # need to perform a groupby root to separate subsets
+        self.flatten_table()
+
+        lut = defaultdict(list)
+
+        for val, root in zip(self.lut.keys(), self.table):
+            lut[root].append(val)
+
+        subset_strings = []
+        for items in lut.values():
+            subset_strings.append("({})".format(
+                                  ", ".join(map(repr, items))))
+
+        subset_str = ", ".join(subset_strings)
+        repr_str = "{name}({subsets})".format(name=self.__class__.__name__,
+                                              subsets=subset_str)
+
+        return repr_str
+
+    def union(self, a, b):
+        id_a, id_b = self.lut[a], self.lut[b]
+        return super().union(id_a, id_b)
+
+    def is_disjoint(self, a, b):
+        id_a, id_b = self.lut[a], self.lut[b]
+        return super().is_disjoint(id_a, id_b)
+
+
+
 #: for testing
 
 
-def _main():
+def _test_nds():
 
     nds = NumberedDisjointSet(16)
 
@@ -110,6 +156,38 @@ def _main():
     print(nds)
 
     return nds
+
+
+def _test_ds():
+
+    ls = [1, 2, 56, 23,
+          'aas', 'f', 2.3, (1, 2, 3)]
+
+    ds = DisjointSet(ls)
+
+    ds.union(1, 2)
+    ds.union(56, 2.3)
+    ds.union(2.3, 2)
+
+    ds.union('aas', (1, 2, 3))
+    ds.union(2.3, 2.3)
+
+    print(ds)
+
+    return ds
+
+
+def _main():
+
+    print()
+
+    _test_nds()
+
+    print()
+    
+    _test_ds()
+
+    print()
 
 
 if __name__ == '__main__':

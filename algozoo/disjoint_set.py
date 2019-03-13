@@ -13,7 +13,7 @@ class NumberedDisjointSet(object):
         self.table = list(range(N))
         self.size = N
 
-        #
+        # whether all sets are pointing to root thier root subset
         self.flattened = True
 
     def __contains__(self, val):
@@ -88,7 +88,7 @@ class NumberedDisjointSet(object):
         return not self.is_disjoint(a, b)
 
 
-class DisjointSet(NumberedDisjointSet):
+class FixedDisjointSet(NumberedDisjointSet):
 
     def __init__(self, items):
 
@@ -162,18 +162,18 @@ def _test_ds():
     ls = [1, 2, 56, 23,
           'aas', 'f', 2.3, (1, 2, 3)]
 
-    ds = DisjointSet(ls)
+    fds = FixedDisjointSet(ls)
 
-    ds.union(1, 2)
-    ds.union(56, 2.3)
-    ds.union(2.3, 2)
+    fds.union(1, 2)
+    fds.union(56, 2.3)
+    fds.union(2.3, 2)
 
-    ds.union('aas', (1, 2, 3))
-    ds.union(2.3, 2.3)
+    fds.union('aas', (1, 2, 3))
+    fds.union(2.3, 2.3)
 
-    print(ds)
+    print(fds)
 
-    return ds
+    return fds
 
 
 def _main():
@@ -184,7 +184,7 @@ def _main():
 
     print()
 
-    _test_ds()
+    _test_fds()
 
     print()
 

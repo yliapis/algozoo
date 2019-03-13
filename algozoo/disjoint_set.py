@@ -20,6 +20,11 @@ class NumberedDisjointSet(object):
 
         return val < self.size
 
+    def __iter__(self):
+
+        for disjoint_set in self.get_disjoint_sets():
+            yield disjoint_set
+
     def __len__(self):
 
         return self.size

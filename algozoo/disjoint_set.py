@@ -122,21 +122,6 @@ class FixedDisjointSet(NumberedDisjointSet):
     def __contains__(self, val):
         return val in self.lut
 
-    def __repr__(self):
-
-        disjoint_sets = self.get_disjoint_sets()
-
-        subset_strings = []
-        for items in disjoint_sets:
-            subset_strings.append("({})".format(
-                                  ", ".join(map(repr, items))))
-
-        subset_str = ", ".join(subset_strings)
-        repr_str = "{name}({subsets})".format(name=self.__class__.__name__,
-                                              subsets=subset_str)
-
-        return repr_str
-
     def get_disjoint_sets(self):
 
         # need to perform a groupby root to separate subsets

@@ -23,7 +23,7 @@ class BloomFilter:
             raise Exception("items={} is not iterable".format(items))
 
     def _hash(self, val):
-        return hash(val)
+        return hash(str(val))
 
     def _get_bit_list(self, val):
 

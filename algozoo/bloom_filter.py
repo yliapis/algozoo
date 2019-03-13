@@ -65,7 +65,7 @@ def _main():
     print()
     print("Testing Bloom Filter")
 
-    bf = BloomFilter()
+    bf = BloomFilter(k=3)
 
     for i in range(3, 8):
         print("Adding {val}".format(val=i))
@@ -76,6 +76,9 @@ def _main():
     for i in range(10):
         msg = "" if i in bf else "not "
         print("{val} is {msg}in set".format(val=i, msg=msg))
+
+    print()
+    print(bf)
 
     print()
 

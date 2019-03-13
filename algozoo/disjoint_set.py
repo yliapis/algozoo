@@ -29,13 +29,10 @@ class NumberedDisjointSet(object):
         # need to perform a groupby root to separate subsets
         self.flatten_table()
 
-        lut = defaultdict(list)
-
-        for i, root in enumerate(self.table):
-            lut[root].append(i)
+        disjoint_sets = self.get_disjoint_sets()
 
         subset_strings = []
-        for items in lut.values():
+        for items in disjoint_sets:
             subset_strings.append("({})".format(
                                   ", ".join(map(repr, items))))
 
@@ -74,6 +71,20 @@ class NumberedDisjointSet(object):
         if not self.flattened:
             for val in range(self.size):
                 self.flatten(val)
+
+    def get_disjoint_sets(self):
+
+        # need to perform a groupby root to separate subsets
+        self.flatten_table()
+
+        lut = defaultdict(list)
+
+        for i, root in enumerate(self.table):
+            lut[root].append(i)
+
+        disjoint_sets = tuple(map(tuple, lut.values()))
+
+        return disjoint_sets
 
     def is_disjoint(self, a, b):
 
@@ -134,8 +145,6 @@ class FixedDisjointSet(NumberedDisjointSet):
         disjoint_sets = tuple(map(tuple, lut.values()))
 
         return disjoint_sets
-
-
 
     def union(self, a, b):
         id_a, id_b = self.lut[a], self.lut[b]

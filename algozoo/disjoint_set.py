@@ -136,6 +136,38 @@ class FixedDisjointSet(NumberedDisjointSet):
         return super().is_disjoint(id_a, id_b)
 
 
+class DisjointSet(FixedDisjointSet):
+
+    def __init__(self, items=None):
+
+        super().__init__(items)
+
+    def __contains__(self, val):
+
+        return val in self.lut
+
+    def add(self, val):
+
+        if val not in self:
+            self.lut[val] = self.size
+            self.table.append(self.size)
+            self.size += 1
+
+    def union(self, a, b):
+
+        if a not in self:
+            self.add(a)
+        if b not in self:
+            self.add(b)
+
+        super().union(a, b)
+
+    def is_disjoint(self, a, b):
+        if (a not in self) or (b not in self):
+            return True
+        return super().is_disjoint(a, b)
+
+
 #: for testing
 
 
@@ -176,15 +208,41 @@ def _test_fds():
     return fds
 
 
+def _test_ds():
+
+    ls = [1, 2, 56, 23,
+          'aas', 'f', 2.3, (1, 2, 3)]
+
+    ds = DisjointSet(ls)
+
+    ds.union(1, 2)
+    ds.union(56, 2.3)
+    ds.union(2.3, 2)
+
+    ds.union('aas', (1, 2, 3))
+    ds.union(2.3, 2.3)
+
+    ds.add('extra')
+    ds.add('extra2')
+
+    ds.union('extra3', 'extra2')
+    ds.union('extra2', 23)
+
+    print(ds)
+
+    return ds
+
+
 def _main():
 
     print()
-
     _test_nds()
 
     print()
-
     _test_fds()
+
+    print()
+    _test_ds()
 
     print()
 

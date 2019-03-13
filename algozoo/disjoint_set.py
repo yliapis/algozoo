@@ -157,7 +157,7 @@ def _test_nds():
     return nds
 
 
-def _test_ds():
+def _test_fds():
 
     ls = [1, 2, 56, 23,
           'aas', 'f', 2.3, (1, 2, 3)]

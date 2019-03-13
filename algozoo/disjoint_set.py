@@ -108,16 +108,10 @@ class FixedDisjointSet(NumberedDisjointSet):
 
     def __repr__(self):
 
-        # need to perform a groupby root to separate subsets
-        self.flatten_table()
-
-        lut = defaultdict(list)
-
-        for val, root in zip(self.lut.keys(), self.table):
-            lut[root].append(val)
+        disjoint_sets = self.get_disjoint_sets()
 
         subset_strings = []
-        for items in lut.values():
+        for items in disjoint_sets:
             subset_strings.append("({})".format(
                                   ", ".join(map(repr, items))))
 
@@ -126,6 +120,22 @@ class FixedDisjointSet(NumberedDisjointSet):
                                               subsets=subset_str)
 
         return repr_str
+
+    def get_disjoint_sets(self):
+
+        # need to perform a groupby root to separate subsets
+        self.flatten_table()
+
+        lut = defaultdict(list)
+
+        for val, root in zip(self.lut.keys(), self.table):
+            lut[root].append(val)
+
+        disjoint_sets = tuple(map(tuple, lut.values()))
+
+        return disjoint_sets
+
+
 
     def union(self, a, b):
         id_a, id_b = self.lut[a], self.lut[b]

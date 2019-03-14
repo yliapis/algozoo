@@ -48,7 +48,6 @@ class BinarySearchTree:
 
         return self
 
-
     def insert(self, val):
 
         if self.val is None:  # for uninitialized tree
@@ -57,14 +56,14 @@ class BinarySearchTree:
             if self.right:
                 self.right.insert(val)
             else:
-                self.right = BinarySearchTree(val,
-                                comparator=self.comparator)
+                self.right = BinarySearchTree(
+                                val, comparator=self.comparator)
         else:
             if self.left:
                 self.left.insert(val)
             else:
-                self.left = BinarySearchTree(val,
-                                comparator=self.comparator)
+                self.left = BinarySearchTree(
+                                val, comparator=self.comparator)
 
     def search(self, val):
 
@@ -81,22 +80,29 @@ class BinarySearchTree:
             else:
                 return False
 
+
 #: for testing
 
 
 def _main():
+
+    print()
 
     items = [1, 3, 7, 5, 4]
 
     tree = BinarySearchTree.from_iterable(items)
 
     print(tree)
+    print()
 
     for i in range(8):
         msg = "" if i in tree else "not "
         print("{i} is {msg}in tree".format(i=i, msg=msg))
 
+    print()
+
     return tree
+
 
 if __name__ == '__main__':
 

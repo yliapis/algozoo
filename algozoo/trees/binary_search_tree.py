@@ -21,7 +21,7 @@ class BinarySearchTree:
 
         self.root = None
         self.size = 0
-        
+
         if comparator is None:
             self.comparator = lambda a, b: a > b
         elif callable(comparator):
@@ -64,7 +64,6 @@ class BinarySearchTree:
 
     def insert(self, val):
         self._insert_node(self._node_factory(val))
-
 
     def _insert_node(self, new_node):
 

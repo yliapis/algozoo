@@ -27,7 +27,8 @@ class BinarySearchTree:
         elif callable(comparator):
             self.comparator = comparator
         else:
-            raise Exception("comparator={!r} not callable".format(comparator))
+            raise Exception("comparator={!r} is not "
+                            "callable".format(comparator))
 
         if hasattr(items, '__iter__'):
             for item in items:

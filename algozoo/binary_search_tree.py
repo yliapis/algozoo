@@ -1,117 +1,94 @@
 
 
-#: comparators
+#: class def
 
 
-def _greater_than(a, b):
-    return a > b
+class BinarySearchTree:
+    """
+    """
 
+    def __init__(self, val=None, left=None, right=None):
 
-#: Node def
-
-
-class _tree_node:
-
-    def __init__(self, val):
         self.val = val
-        self.left = None
-        self.right = None
+        self.left = left
+        self.right = right
+
+    def __contains__(self, val):
+
+        return self.search(val)
+
+    def __iter__(self):
+
+        if self.left:
+            yield from self.left
+        yield self.val
+        if self.right:
+            yield from self.right
+
+    def __repr__(self):
+
+        repr_vals = ", ".join(map(repr, self))
+        repr_str = "{name}({items})".format(name=self.__class__.__name__,
+                                            items=repr_vals)
+
+        return repr_str
+
+    @classmethod
+    def from_iterable(cls, iterable):
+
+        self = cls()
+        for val in iterable:
+            self.insert(val)
+
+        return self
 
 
-#: Tree def
+    def insert(self, val):
 
-
-class BST:
-
-    def __init__(self, items=None, comparator=_greater_than):
-
-        self.root = None
-        self.comparator = comparator
-
-        if hasattr(items, '__iter__'):
-            for item in items:
-                self.insert(item)
-        elif items is not None:
-            raise Exception("items={} is not iterable".format(items))
-
-    def __iter__(self, node="root"):
-        """ DFS iteration """
-
-        if node == "root":
-            node = self.root
-
-        if node:
-
-            if node.left:
-                for val in self.__iter__(node.left):
-                    yield val
-
-            yield node.val
-
-            if node.right:
-                for val in self.__iter__(node.right):
-                    yield val
-
-    def __str__(self):
-
-        bst_str = ', '.join([repr(item) for item in self])
-        bst_str = "BST({})".format(bst_str)
-
-        return bst_str
-
-    def insert(self, val, node=None):
-
-        if self.root is None:
-            self.root = _tree_node(val)
-            return
-
-        if node is None:
-            node = self.root
-
-        if self.comparator(val, node.val):
-            if node.right is None:
-                node.right = _tree_node(val)
+        if self.val is None:  # for uninitialized tree
+            self.val = val
+        elif val > self.val:
+            if self.right:
+                self.right.insert(val)
             else:
-                self.insert(val, node.right)
+                self.right = BinarySearchTree(val)
         else:
-            if node.left is None:
-                node.left = _tree_node(val)
+            if self.left:
+                self.left.insert(val)
             else:
-                self.insert(val, node.left)
+                self.left = BinarySearchTree(val)
 
-    def search(self, val, node=None):
+    def search(self, val):
 
-        if not node:
-            node = self.root
-
-        if not node:
-            return False
-
-        if node.val == val:
+        if self.val == val:
             return True
-        elif self.comparator(val, node.val):
-            if node.right is None:
-                return False
+        elif val > self.val:
+            if self.right:
+                return self.right.search(val)
             else:
-                self.search(val, node.right)
+                return False
         else:
-            if node.left is None:
-                return False
+            if self.left:
+                return self.left.search(val)
             else:
-                self.search(node.left)
-
+                return False
 
 #: for testing
 
 
 def _main():
 
-    items = [1, 3, 2, 5, 4, 9]
+    items = [1, 3, 7, 5, 4]
 
-    tree = BST(items)
+    tree = BinarySearchTree.from_iterable(items)
 
     print(tree)
 
+    for i in range(8):
+        msg = "" if i in tree else "not "
+        print("{i} is {msg}in tree".format(i=i, msg=msg))
+
+    return tree
 
 if __name__ == '__main__':
 

@@ -19,8 +19,8 @@ class _BSTNode:
         else:
             self.comparator = comparator
 
-        # for name, val in kwargs:
-        #     setattr(self, name, val)
+        for name, val in kwargs:
+            setattr(self, name, val)
 
     def __contains__(self, val):
 

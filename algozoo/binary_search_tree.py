@@ -7,11 +7,17 @@ class BinarySearchTree:
     """
     """
 
-    def __init__(self, val=None, left=None, right=None):
+    def __init__(self, val=None, left=None, right=None,
+                 comparator=None):
 
         self.val = val
         self.left = left
         self.right = right
+
+        if not comparator:
+            self.comparator = lambda a, b: a > b
+        else:
+            self.comparator = comparator
 
     def __contains__(self, val):
 
@@ -47,22 +53,24 @@ class BinarySearchTree:
 
         if self.val is None:  # for uninitialized tree
             self.val = val
-        elif val > self.val:
+        elif self.comparator(val, self.val):
             if self.right:
                 self.right.insert(val)
             else:
-                self.right = BinarySearchTree(val)
+                self.right = BinarySearchTree(val,
+                                comparator=self.comparator)
         else:
             if self.left:
                 self.left.insert(val)
             else:
-                self.left = BinarySearchTree(val)
+                self.left = BinarySearchTree(val,
+                                comparator=self.comparator)
 
     def search(self, val):
 
         if self.val == val:
             return True
-        elif val > self.val:
+        elif self.comparator(val, self.val):
             if self.right:
                 return self.right.search(val)
             else:

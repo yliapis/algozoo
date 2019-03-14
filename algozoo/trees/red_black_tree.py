@@ -5,9 +5,9 @@ from binary_search_tree import _TreeNode, BinarySearchTree
 
 class _RBTNode(_TreeNode):
 
-    def __init__(self, val, is_red=True, *args, **kwargs)
+    def __init__(self, val, red=True, *args, **kwargs):
         super().__init__(val, *args, **kwargs)
-        self.is_red = red
+        self.red = red
 
 
 class RedBlackTree(BinarySearchTree):

@@ -49,7 +49,7 @@ class _BSTNode:
         self.insert_items(iterable)
         return self
 
-    def insert(self, val):
+    def insert(self, val, *args, **kwargs):
 
         if self.val is None:  # for uninitialized tree
             self.val = val
@@ -57,12 +57,14 @@ class _BSTNode:
             if self.right:
                 self.right.insert(val)
             else:
-                self.right = _BSTNode(val, comparator=self.comparator)
+                self.right = _BSTNode(val, comparator=self.comparator,
+                                      *args, **kwargs)
         else:
             if self.left:
                 self.left.insert(val)
             else:
-                self.left = _BSTNode(val, comparator=self.comparator)
+                self.left = _BSTNode(val, comparator=self.comparator,
+                                     *args, **kwargs)
 
     def insert_items(self, items):
 
@@ -92,17 +94,17 @@ class BinarySearchTree:
     def __init__(self, items=None):
 
         if hasattr(items, '__iter__'):
-            self.tree = _BSTNode.from_iterable(items)
+            self.root = _BSTNode.from_iterable(items)
         elif items is None:
-            self.tree = _BSTNode()
+            self.root = _BSTNode()
         else:
             raise Exception("items={} is not iterable".format(items))
 
     def __contains__(self, val):
-        return val in self.tree
+        return val in self.root
 
     def __iter__(self):
-        return iter(self.tree)
+        return iter(self.root)
 
     def __repr__(self):
 
@@ -113,10 +115,10 @@ class BinarySearchTree:
         return repr_str
 
     def insert(self, *args, **kwargs):
-        self.tree.insert(*args, **kwargs)
+        self.root.insert(*args, **kwargs)
 
-    def search(self, *args, **kwargs):
-        self.tree.search(*args, **kwargs)
+    def search(self, val):
+        self.root.search(val)
 
 
 #: for testing

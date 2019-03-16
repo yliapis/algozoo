@@ -19,18 +19,17 @@ class RedBlackTree(BinarySearchTree):
 
     def insert(self, val):
         new_node = self._node_factory(val)
-        self.root = self._insert_node(new_node, self.root)
+        self.root = self._recursive_insert(new_node, self.root)
 
-    def _insert_node(self, new_node, node=None):
-
+    def _recursive_insert(self, new_node, node=None):
         # standard insert
         self.size += 1
         if node is None:
             return new_node
         elif self.comparator(new_node.val, node.val):
-            node.right = self._insert_node(new_node, node.right)
+            node.right = self._recursive_insert(new_node, node.right)
         else:
-            node.left = self._insert_node(new_node, node.left)
+            node.left = self._recursive_insert(new_node, node.left)
 
         # rebalancing rules applied
         node = self._rebalance(node)
@@ -52,15 +51,15 @@ class RedBlackTree(BinarySearchTree):
         if val == node.val:
             self.size -= 1
             if node.left and node.right:
-                return self._insert_node(node.left, node.right)
+                return self._recursive_insert(node.left, node.right)
             elif node.left:
                 return node.left
             else:
                 return node.right
         elif self.comparator(val, node.val):
-            node.right = self._recursive_remove(val, node.right, node)
+            node.right = self._recursive_remove(val, node.right)
         else:
-            node.left = self._recursive_remove(val, node.left, node)
+            node.left = self._recursive_remove(val, node.left)
 
         return node
 
@@ -72,11 +71,9 @@ class RedBlackTree(BinarySearchTree):
             node = self._rotate_right(node)
         if self._is_red(node.right) and self._is_red(node.left):
             self._flip_colors(node)
-
         return node
 
     def _is_red(self, node):
-
         if node is None:
             return False
         else:
@@ -86,7 +83,7 @@ class RedBlackTree(BinarySearchTree):
         # rotate
         parent = node.right
         node.right = node.left
-        node.left = node
+        parent.left = node
         # modify colors
         parent.red = node.red
         node.red = True
@@ -96,7 +93,7 @@ class RedBlackTree(BinarySearchTree):
         # rotate
         parent = node.left
         node.left = node.right
-        node.right = node
+        parent.right = node
         # modify colors
         parent.red = node.red
         node.red = True
@@ -115,10 +112,13 @@ def _main():
     print()
 
     items = [1, 3, 2, 7, 4]
+    # items = [1, 4, 2, 10, 4]
 
     tree = RedBlackTree(items)
 
-    print(tree)
+    print("items:", items)
+    print("tree:", tree)
+    print("representation:\n    ", tree.nested_repr())
     print()
 
     print("Removing 3")

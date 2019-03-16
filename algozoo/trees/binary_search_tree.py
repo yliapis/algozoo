@@ -64,6 +64,18 @@ class BinarySearchTree:
 
         return bst_str
 
+    def nested_repr(self, node=None, start=True):
+
+        if start:
+            node = self.root
+        if not node:
+            return "."
+        else:
+            return "({left} {val} {right})".format(
+                            val=node.val,
+                            left=self.nested_repr(node.left, start=False),
+                            right=self.nested_repr(node.right, start=False))
+
     def insert(self, val):
         self._insert_node(self._node_factory(val))
 

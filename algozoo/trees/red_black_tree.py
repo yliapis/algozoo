@@ -112,7 +112,6 @@ def _main():
     print()
 
     items = [1, 3, 2, 7, 4]
-    # items = [1, 4, 2, 10, 4]
 
     tree = RedBlackTree(items)
 

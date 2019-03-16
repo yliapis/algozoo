@@ -69,7 +69,7 @@ class RedBlackTree(BinarySearchTree):
             node = self._rotate_left(node)
         if self._is_red(node.left) and self._is_red(node.left.left):
             node = self._rotate_right(node)
-        if self._is_red(node.right) and self._is_red(node.left):
+        if self._is_red(node.left) and self._is_red(node.right):
             self._flip_colors(node)
         return node
 
@@ -82,7 +82,7 @@ class RedBlackTree(BinarySearchTree):
     def _rotate_left(self, node):
         # rotate
         parent = node.right
-        node.right = node.left
+        node.right = parent.left
         parent.left = node
         # modify colors
         parent.red = node.red
@@ -92,7 +92,7 @@ class RedBlackTree(BinarySearchTree):
     def _rotate_right(self, node):
         # rotate
         parent = node.left
-        node.left = node.right
+        node.left = parent.right
         parent.right = node
         # modify colors
         parent.red = node.red

@@ -3,7 +3,7 @@
 #: Base class
 
 
-class _base:
+class _BaseDequeue:
 
     def __init__(self, items=None):
 
@@ -71,7 +71,7 @@ class _base:
 #: class defs
 
 
-class Dequeue(_base):
+class Dequeue(_BaseDequeue):
 
     def peak_start(self):
         return self._peak_start()
@@ -92,7 +92,7 @@ class Dequeue(_base):
         self._push_end(val)
 
 
-class Stack(_base):
+class Stack(_BaseDequeue):
 
     def push(self, val):
         self._push_end(val)
@@ -104,7 +104,7 @@ class Stack(_base):
         return self._peak_end()
 
 
-class Queue(_base):
+class Queue(_BaseDequeue):
 
     def enqueue(self, val):
         self._push_end(val)

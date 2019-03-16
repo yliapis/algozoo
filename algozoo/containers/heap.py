@@ -18,7 +18,9 @@ class FiniteHeap(object):
         raise NotImplementedError
 
     def __repr__(self):
-        raise NotImplementedError
+        return "{name}({items})".format(
+            name=self.__class__.__name__,
+            items=self.table[:self.size])
 
     def __len__(self):
         return self.size
@@ -92,6 +94,7 @@ def _main():
     fh = FiniteHeap(items)
 
     print("items:", items)
+    print(fh)
 
     sorted_items = []
     while len(fh) > 0:

@@ -2,7 +2,9 @@
 
 #
 
-def dfs_iter(root=None, key=lambda node: node.next):
+def dfs_iter(root=None,
+             value=lambda node: node.val,
+             key=lambda node: node.next):
     """Generic depth-first search iterator
 
     NOTE: assumes structure is directed acyclic graph;
@@ -12,11 +14,13 @@ def dfs_iter(root=None, key=lambda node: node.next):
     if root is None:
         return
 
-    yield root.val
+    yield value(root)
     yield from key(root)
 
 
-def bfs_iter(root=None, key=lambda node: node.next):
+def bfs_iter(root=None,
+             value=lambda node: node.val,
+             key=lambda node: node.next):
     """Generic breadth-first search iterator
 
     NOTE: assumes structure is directed acyclic graph;
@@ -31,7 +35,7 @@ def bfs_iter(root=None, key=lambda node: node.next):
     while queue:
         node = queue.pop(0)
         if node is not None:
-            yield node.val
+            yield value(node)
             queue.extend(list(key(node)))
 
 

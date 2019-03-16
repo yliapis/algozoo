@@ -50,6 +50,7 @@ class RedBlackTree(BinarySearchTree):
             return None
 
         if val == node.val:
+            self.size -= 1
             if node.left and node.right:
                 return self._insert_node(node.left, node.right)
             elif node.left:

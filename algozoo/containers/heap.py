@@ -27,7 +27,7 @@ class FiniteHeap(object):
         raise NotImplementedError
 
     def insert(self, val):
-        
+
         ptr = self.size
         if ptr >= self._table_size:
             raise NotImplementedError("element does not fit")
@@ -46,7 +46,7 @@ class FiniteHeap(object):
                 ptr = parent
 
     def pop(self):
-        
+
         val = self.table[0]
 
         self.size -= 1
@@ -56,13 +56,13 @@ class FiniteHeap(object):
         while ptr < self.size:
             left = ((ptr + 1) * 2) - 1
             right = (ptr + 1) * 2
-            
+
             swap = ptr
-            if (left < self.size and 
-                self.comparator(self.table[swap], self.table[left])):
+            if (left < self.size and
+               self.comparator(self.table[swap], self.table[left])):
                 swap = left
-            if (right < self.size and 
-                self.comparator(self.table[swap], self.table[right])):
+            if (right < self.size and
+               self.comparator(self.table[swap], self.table[right])):
                 swap = right
 
             if swap != ptr:

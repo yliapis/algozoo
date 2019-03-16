@@ -81,22 +81,22 @@ def _tree_bfs_iter(root=None,
 #: search functions
 
 
-def dfs_iter(root, mode="graph"):
+def dfs_iter(root, mode="graph", *args, **kwargs):
     if mode == "graph":
-        return _graph_dfs_iter(root)
+        return _graph_dfs_iter(root, *args, **kwargs)
     elif mode == "tree":
-        return _tree_dfs_iter(root)
+        return _tree_dfs_iter(root, *args, **kwargs)
     else:
         raise NotImplementedError(
                 "Error: dfs not implimented for "
                 "mode={mode}".format(mode=mode))
 
 
-def bfs_iter(root, mode="graph"):
+def bfs_iter(root, mode="graph", *args, **kwargs):
     if mode == "graph":
-        return _graph_bfs_iter(root)
+        return _graph_bfs_iter(root, *args, **kwargs)
     elif mode == "tree":
-        return _tree_bfs_iter(root)
+        return _tree_bfs_iter(root, *args, **kwargs)
     else:
         raise NotImplementedError(
                 "Error: bfs not implimented for "

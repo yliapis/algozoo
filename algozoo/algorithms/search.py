@@ -28,9 +28,6 @@ def bfs_iter(root=None,
     does not work with cyclic data structures
     """
 
-    if root is None:
-        return
-
     queue = [root]
 
     while queue:

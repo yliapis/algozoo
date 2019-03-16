@@ -49,6 +49,9 @@ class FiniteHeap(object):
 
     def pop(self):
 
+        if self.size <= 0:
+            raise Exception("heap is empty, cannot pop")
+
         val = self.table[0]
 
         self.size -= 1
@@ -89,18 +92,23 @@ class FiniteHeap(object):
 
 def _main():
 
+    print()
+
     items = [1, 4, 2, 3, -1]
 
     fh = FiniteHeap(items)
 
     print("items:", items)
     print(fh)
+    print()
 
     sorted_items = []
     while len(fh) > 0:
         sorted_items.append(fh.pop())
 
     print("sorted items:", sorted_items)
+
+    print()
 
 
 if __name__ == '__main__':

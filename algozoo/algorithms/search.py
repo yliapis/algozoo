@@ -5,12 +5,47 @@ if __name__ == '__main__':
     import random
 
 
-#: search functions
+#: core/helper functions
 
 
-def dfs_iter(root=None,
-             value=lambda node: node.val,
-             key=lambda node: node.next):
+def _graph_dfs_iter(root=None,
+                    value=lambda node: node.val,
+                    key=lambda node: node.next,
+                    visited=None):
+    """Generic depth-first search iterator"""
+
+    if visited is None:
+        visited = set()
+
+    if root is None:
+        return
+
+    if root not in visited:
+        yield value(root)
+        visited.add(root)
+        for node in key(root):
+            yield from _graph_dfs_iter(node, visited=visited)
+
+
+def _graph_bfs_iter(root=None,
+                    value=lambda node: node.val,
+                    key=lambda node: node.next):
+    """Generic breadth-first search iterator"""
+
+    queue = [root]
+    visited = set()
+
+    while queue:
+        node = queue.pop(0)
+        if node is not None and node not in visited:
+            yield value(node)
+            visited.add(node)
+            queue.extend(key(node))
+
+
+def _tree_dfs_iter(root=None,
+                   value=lambda node: node.val,
+                   key=lambda node: node.next):
     """Generic depth-first search iterator
 
     NOTE: assumes structure is tree-like;
@@ -22,12 +57,12 @@ def dfs_iter(root=None,
 
     yield value(root)
     for node in key(root):
-        yield from dfs_iter(node)
+        yield from _tree_dfs_iter(node)
 
 
-def bfs_iter(root=None,
-             value=lambda node: node.val,
-             key=lambda node: node.next):
+def _tree_bfs_iter(root=None,
+                   value=lambda node: node.val,
+                   key=lambda node: node.next):
     """Generic breadth-first search iterator
 
     NOTE: assumes structure is tree-like;
@@ -41,6 +76,31 @@ def bfs_iter(root=None,
         if node is not None:
             yield value(node)
             queue.extend(key(node))
+
+
+#: search functions
+
+
+def dfs_iter(root, mode="graph"):
+    if mode == "graph":
+        return _graph_dfs_iter(root)
+    elif mode == "tree":
+        return _tree_dfs_iter(root)
+    else:
+        raise NotImplementedError(
+                "Error: dfs not implimented for "
+                "mode={mode}".format(mode=mode))
+
+
+def bfs_iter(root, mode="graph"):
+    if mode == "graph":
+        return _graph_bfs_iter(root)
+    elif mode == "tree":
+        return _tree_bfs_iter(root)
+    else:
+        raise NotImplementedError(
+                "Error: bfs not implimented for "
+                "mode={mode}".format(mode=mode))
 
 
 #: for testing
@@ -58,6 +118,7 @@ class __testNode:
             self.next = next
 
     def __repr__(self):
+        # NOTE: this breaks for cyclic structures
         return "({val}: ({next}))".format(
                     val=self.val,
                     next=", ".join(map(repr, self.next)))

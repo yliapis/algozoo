@@ -1,6 +1,7 @@
 
 
-#
+#: search functions
+
 
 def dfs_iter(root=None,
              value=lambda node: node.val,

@@ -1,13 +1,14 @@
 
+
 #: Node def
 
 
 class _TreeNode:
 
-    def __init__(self, val):
+    def __init__(self, val, left=None, right=None):
         self.val = val
-        self.left = None
-        self.right = None
+        self.left = left
+        self.right = right
 
 
 #: Tree def
@@ -63,6 +64,18 @@ class BinarySearchTree:
 
         return bst_str
 
+    def nested_repr(self, node=None, start=True):
+
+        if start:
+            node = self.root
+        if not node:
+            return "."
+        else:
+            return "({left} {val} {right})".format(
+                            val=node.val,
+                            left=self.nested_repr(node.left, start=False),
+                            right=self.nested_repr(node.right, start=False))
+
     def insert(self, val):
         self._insert_node(self._node_factory(val))
 
@@ -91,11 +104,11 @@ class BinarySearchTree:
 
     def remove(self, val):
 
+        if not self.root:
+            return
+
         node = self.root
         parent = None
-
-        if not node:
-            return
 
         while node:
             if node.val == val:

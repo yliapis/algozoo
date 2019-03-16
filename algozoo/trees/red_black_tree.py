@@ -43,7 +43,7 @@ class RedBlackTree(BinarySearchTree):
     def _recursive_remove(self, val, node):
 
         # TODO: double check this implementation, make sure
-        # it still results in a balanced tree
+        # it still results in a balanced tree... likely not
         # NOTE: look up Hibbard deletion
 
         if node is None:

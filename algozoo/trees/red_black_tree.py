@@ -44,6 +44,7 @@ class RedBlackTree(BinarySearchTree):
 
         # TODO: double check this implementation, make sure
         # it still results in a balanced tree
+        # NOTE: look up Hibbard deletion
 
         if node is None:
             return None

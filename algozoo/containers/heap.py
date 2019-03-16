@@ -56,18 +56,21 @@ class FiniteHeap(object):
         while ptr < self.size:
             left = ((ptr + 1) * 2) - 1
             right = (ptr + 1) * 2
+            
+            swap = ptr
+            if (left < self.size and 
+                self.comparator(self.table[swap], self.table[left])):
+                swap = left
+            if (right < self.size and 
+                self.comparator(self.table[swap], self.table[right])):
+                swap = right
 
-            if (self.comparator(self.table[left], self.table[ptr]) and
-                self.comparator(self.table[right], self.table[ptr])):
-                break
-            elif self.comparator(self.table[left], self.table[right]):
-                self.table[right], self.table[ptr] = (
-                    self.table[ptr], self.table[right])
-                ptr = right
+            if swap != ptr:
+                self.table[ptr], self.table[swap] = (
+                    self.table[swap], self.table[ptr])
+                ptr = swap
             else:
-                self.table[left], self.table[ptr] = (
-                    self.table[ptr], self.table[left])
-                ptr = left
+                break
 
         return val
 
@@ -82,7 +85,6 @@ def _main():
     fh = FiniteHeap(items)
 
     print("items:", items)
-    print(fh.table)
 
     sorted_items = []
     while len(fh) > 0:

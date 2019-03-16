@@ -3,7 +3,7 @@
 #
 
 def dfs_iter(root=None, key=lambda node: node.next):
-    """Generic depth-first search iterator 
+    """Generic depth-first search iterator
 
     NOTE: assumes structure is directed acyclic graph;
     does not work with cyclic data structures
@@ -36,6 +36,14 @@ def bfs_iter(root=None, key=lambda node: node.next):
 
 
 #: for testing
+
+
+def _test_dfs():
+    pass
+
+
+def _test_bfs():
+    pass
 
 
 def _main():

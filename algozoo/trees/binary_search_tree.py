@@ -92,11 +92,11 @@ class BinarySearchTree:
 
     def remove(self, val):
 
+        if not self.root:
+            return
+
         node = self.root
         parent = None
-
-        if not node:
-            return
 
         while node:
             if node.val == val:

@@ -74,6 +74,13 @@ class FiniteHeap(object):
 
         return val
 
+    def peak(self):
+
+        if self.size > 0:
+            return self.table[0]
+        else:
+            return None
+
 
 #: for testing
 

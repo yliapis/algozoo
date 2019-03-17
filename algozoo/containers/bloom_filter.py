@@ -1,5 +1,8 @@
 
 
+from math import ceil, log
+
+
 #: class def
 
 
@@ -39,6 +42,18 @@ class BloomFilter:
             bit_list.append((table_idx, bit))
 
         return bit_list
+
+    @classmethod
+    def from_specification(cls, p=0.01, N=1024):
+        """Instantiate bloom filter from expected number
+        of elements `N` and desired false positive rate `p`
+        """
+        # initially, compute optimal size and k
+        size = int(ceil(N * log(p) / (log(2) ** 2)))
+        k = int(ceil(-log(p, 2)))
+        # initialize self
+        self = cls(size=size, k=k)
+        return self
 
     def add(self, val):
 

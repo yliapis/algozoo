@@ -49,7 +49,7 @@ class BloomFilter:
         of elements `N` and desired false positive rate `p`
         """
         # initially, compute optimal size and k
-        size = int(ceil(N * log(p) / (log(2) ** 2)))
+        size = int(ceil((-N * log(p)) / (log(2) ** 2)))
         k = int(ceil(-log(p, 2)))
         # initialize self
         self = cls(size=size, k=k)

@@ -11,7 +11,8 @@ if __name__ == '__main__':
 def _graph_dfs_iter(root=None,
                     value=lambda node: node.val,
                     key=lambda node: node.next,
-                    visited=None):
+                    visited=None,
+                    order="first"):
     """Generic depth-first search iterator"""
 
     if visited is None:
@@ -21,10 +22,17 @@ def _graph_dfs_iter(root=None,
         return
 
     if root not in visited:
-        yield value(root)
+        if order == "first":
+            yield value(root)
         visited.add(root)
         for node in key(root):
-            yield from _graph_dfs_iter(node, visited=visited)
+            yield from _graph_dfs_iter(node,
+                                       key=key,
+                                       value=value,
+                                       visited=visited,
+                                       order=order)
+        if order == "last":
+            yield value(root)
 
 
 def _graph_bfs_iter(root=None,
@@ -45,7 +53,8 @@ def _graph_bfs_iter(root=None,
 
 def _tree_dfs_iter(root=None,
                    value=lambda node: node.val,
-                   key=lambda node: node.next):
+                   key=lambda node: node.next,
+                   order="first"):
     """Generic depth-first search iterator
 
     NOTE: assumes structure is tree-like;
@@ -55,9 +64,15 @@ def _tree_dfs_iter(root=None,
     if root is None:
         return
 
-    yield value(root)
+    if order == "first":
+            yield value(root)
     for node in key(root):
-        yield from _tree_dfs_iter(node)
+        yield from _tree_dfs_iter(node,
+                                  key=key,
+                                  value=value,
+                                  order=order)
+    if order == "last":
+            yield value(root)
 
 
 def _tree_bfs_iter(root=None,
@@ -139,10 +154,13 @@ def __construct_random_tree(size=8):
 
 
 def _test_dfs(tree):
-    print(list(dfs_iter(tree)))
+    print("dfs")
+    print("first", list(dfs_iter(tree, order="first")))
+    print("last", list(dfs_iter(tree, order="last")))
 
 
 def _test_bfs(tree):
+    print("bfs")
     print(list(bfs_iter(tree)))
 
 

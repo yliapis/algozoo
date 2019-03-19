@@ -1,4 +1,5 @@
 
+
 from math import ceil, log
 from math import e as euler
 

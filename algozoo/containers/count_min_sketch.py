@@ -27,9 +27,9 @@ class CountMinSketch:
         return hash(str(hash(val)) + str(j))
 
     @classmethod
-    def from_specification(cls, epsilon=1.0, error=0.01):
+    def from_specification(cls, epsilon=0.01, error=0.01):
         w = ceil(euler / epsilon)
-        d = ceil(log(1/error))
+        d = ceil(log(1 / error))
         return cls(w=w, d=d)
 
     def update(self, item):
@@ -68,7 +68,7 @@ def __main():
 
     data = [random.choice(items) for _ in range(N)]
 
-    cms = CountMinSketch.from_specification()
+    cms = CountMinSketch.from_specification(0.10, 0.10)
     cms.batch_update(data)
 
     unique = set(items)

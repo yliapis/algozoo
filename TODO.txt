@@ -4,8 +4,6 @@ AVL tree
 Tensor
 Binary search
 Skip List
-Count-min sketch
 selection
 merging
 topological sort
-

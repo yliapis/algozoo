@@ -78,7 +78,7 @@ def __main():
         count = counter[item]
         print("item: {item}\n"
               "exp. p(item): {exp}\n"
-              "true. p(item): {true}\n"
+              "true p(item): {true}\n"
               "est. p(item): {est}\n".format(
                 item=item, exp=probs[item], true=count/N,
                 est=cms.count(item)/cms.size))

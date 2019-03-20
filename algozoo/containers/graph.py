@@ -1,5 +1,8 @@
 
 
+from collections import defaultdict
+
+
 #: class def
 
 
@@ -7,7 +10,7 @@ class Graph:
 
     def __init__(self):
 
-        raise NotImplementedError
+        self._graph_lut = defaultdict(list)
 
     # __ methods
 
@@ -27,9 +30,8 @@ class Graph:
     @classmethod
     def from_adjacency_list(cls, adjacency_list):
         self = cls()
-        for node, neighbors in adjacency_list:
-            for neighbor in neighbors:
-                self.add_edge(node, neighbor)
+        for src, dsts in adjacency_list:
+            self.add_edges(src, dsts)
         return self
 
     @classmethod
@@ -47,15 +49,23 @@ class Graph:
     # manipulation methods
 
     def add_edge(self, src, dst):
-        raise NotImplementedError
+        self._graph_lut[src].append(dst)
+
+    def add_edges(self, src, dsts):
+        self._graph_lut[src].extend(dsts)
 
     # representation extraction methods
 
     def get_edgelist(self):
-        raise NotImplementedError
+        edgelist = []
+        for src, dsts in self._graph_lut.items():
+            for dst in dsts:
+                edgelist.append((src, dst))
+        return edgelist
 
     def get_adjacency_list(self):
-        raise NotImplementedError
+        return [(src, dsts) for src, dsts in
+                self._graph_lut.items()]
 
     def get_adjacency_matrix(self):
         raise NotImplementedError

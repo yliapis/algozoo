@@ -1,71 +1,38 @@
 
 
+from algozoo.core.linked_list import DoublyLinkedList, SinglyLinkedList
+
+
 #: Base class
 
 
 class _BaseDequeue:
 
-    def __init__(self, items=None):
+    _buffer_factory = lambda: None
 
+    def __init__(self, items=None):
         if items is None:
-            self.buffer = []
+            self.buffer = self._buffer_factory()
         elif hasattr(items, '__iter__'):
             self.buffer = [item for item in items]
         else:
             raise Exception("items {!r} are not iterable".format(items))
 
-    def __iter__(self):
+    def __contains__(self, val):
+        return val in self.buffer
 
+    def __iter__(self):
         for item in self.buffer:
             yield item
 
     def __len__(self):
-
         return len(self.buffer)
 
     def __repr__(self):
-
         item_str = ', '.join(map(repr, self.buffer))
         repr_str = "{name}({items})".format(name=self.__class__.__name__,
                                             items=item_str)
-
         return repr_str
-
-    def _push_start(self, val):
-
-        self.buffer = [val] + self.buffer
-
-    def _push_end(self, val):
-
-        self.buffer.append(val)
-
-    def _pop_start(self):
-
-        if self.buffer:
-            return self.buffer.pop(0)
-        else:
-            return None
-
-    def _pop_end(self):
-
-        if self.buffer:
-            return self.buffer.pop()
-        else:
-            return None
-
-    def _peak_start(self):
-
-        if self.buffer:
-            return self.buffer[0]
-        else:
-            return None
-
-    def peak_end(self):
-
-        if self.buffer:
-            return self.buffer[-1]
-        else:
-            return None
 
 
 #: class defs
@@ -73,47 +40,61 @@ class _BaseDequeue:
 
 class Dequeue(_BaseDequeue):
 
+    _buffer_factory = DoublyLinkedList
+
     def peak_start(self):
-        return self._peak_start()
+        return self.buffer.get(0)
 
     def peak_end(self):
-        return self._peak_end()
+        return self.buffer.get(-1)
 
     def pop_start(self):
-        return self._pop_start()
+        val = self.buffer.get(0)
+        self.buffer.remove(0)
+        return val
 
     def pop_end(self):
-        return self._pop_end()
+        val = self.buffer.get(-1)
+        self.buffer.remove(-1)
+        return val
 
     def push_start(self, val):
-        self._push_start(val)
+        self.buffer.insert(val, 0)
 
     def push_end(self, val):
-        self._push_end(val)
+        self.buffer.insert(val, -1)
 
 
 class Stack(_BaseDequeue):
 
+    _buffer_factory = SinglyLinkedList
+
     def push(self, val):
-        self._push_end(val)
+        self.buffer.insert(val, 0)
 
     def pop(self):
-        return self._pop_end()
+        val = self.buffer.get(0)
+        self.buffer.remove(0)
+        return val
 
     def peak(self):
-        return self._peak_end()
+        return self.buffer.get(0)
 
 
 class Queue(_BaseDequeue):
 
+    _buffer_factory = DoublyLinkedList
+
     def enqueue(self, val):
-        self._push_end(val)
+        self.buffer.insert(val, 0)
 
     def dequeue(self, val):
-        return self._pop_start()
+        val = self.buffer.get(-1)
+        self.buffer.remove(-1)
+        return val
 
     def peak(self):
-        return self._peak_start()
+        return self.buffer.get(-1)
 
 
 #: for testing

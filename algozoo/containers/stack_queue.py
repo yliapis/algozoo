@@ -8,7 +8,7 @@ from algozoo.core.linked_list import DoublyLinkedList, SinglyLinkedList
 
 class _BaseDequeue:
 
-    _buffer_factory = lambda: None
+    _buffer_factory = None
 
     def __init__(self, items=None):
         if items is None:

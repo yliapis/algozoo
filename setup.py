@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-from distutils.core import setup
+from setuptools import find_packages, setup
 
 
 # Read long description; README
@@ -17,5 +17,5 @@ setup(name='algozoo',
       author='Yannis Liapis',
       author_email='yliapis44@gmail.com',
       url='https://github.com/yliapis/algozoo',
-      packages=['algozoo'],
+      packages=find_packages(exclude=['tests']),
       )

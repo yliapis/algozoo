@@ -1,0 +1,10 @@
+To add:
+
+AVL tree
+Tensor
+Binary search
+Skip List
+selection
+merging
+topological sort
+graphs

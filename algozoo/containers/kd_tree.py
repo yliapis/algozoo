@@ -1,6 +1,6 @@
 
 
-#: helper class
+#: internal node class
 
 
 class _KDNode:
@@ -27,10 +27,28 @@ class KDTree:
         self.root = self._construct_tree(items)
 
     def __contains__(self, item):
-        raise NotImplementedError
+
+        node = self.root
+
+        depth = 0
+
+        while node:
+
+            level = depth % self.dim
+
+            if node.key == item:
+                return True
+            elif node.key[level] < item[level]:
+                node = node.left
+            else:
+                node = node.right
+
+            depth += 1
+
+        return False
 
     def __iter__(self):
-        raise NotImplementedError
+        yield from self._iter_tree(self.root)
 
     def __len__(self):
         return self.size
@@ -39,7 +57,10 @@ class KDTree:
         return self.__str__()
 
     def __str__(self):
-        raise NotImplementedError
+        item_str = ", ".join(map(repr, self._nested_items(self.root)))
+        repr_str = "{name}({items})".format(name=self.__class__.__name__,
+                                            items=item_str)
+        return repr_str
 
     def _construct_tree(self, items, level=0):
 
@@ -60,11 +81,64 @@ class KDTree:
 
         return node
 
-    def add(self, item):
-        raise NotImplementedError
+    def _iter_tree(self, node):
+
+        if node is None:
+            return
+
+        yield from self._iter_tree(node.left)
+        yield node.key
+        yield from self._iter_tree(node.right)
+
+    def _nested_items(self, node):
+        if node is None:
+            return ()
+        else:
+            return (node.key,
+                    self._nested_items(node.left),
+                    self._nested_items(node.right))
+
+    def _recursive_remove(self, node, item, depth=0):
+
+        if not node:
+            return None
+        elif node.key == item:
+            return self._construct_tree([*self._iter_tree(node.left),
+                                         *self._iter_tree(node.right)])
+
+        level = depth % self.dim
+        depth += 1
+        if node.key[level] < item[level]:
+            return self._recursive_remove(node.left, item, depth)
+        else:
+            return self._recursive_remove(node.right, item, depth)
+
+    def add(self, item, depth=0):
+
+        node = self.root
+
+        if self.root is None:
+            node = _KDNode(item)
+            return
+
+        while True:
+
+            level = depth % self.dim
+
+            if node.key == item:
+                return
+            elif (node.key[level] < item[level]
+                  and not node.left):
+                node.left = _KDNode(item)
+                return
+            elif not node.right:
+                node.right = _KDNode(item)
+                return
+
+            depth += 1
 
     def remove(self, item):
-        raise NotImplementedError
+        self.root = self._recursive_remove(self.root, item)
 
     def in_range(self, upper, lower, axis=None):
         raise NotImplementedError
@@ -77,7 +151,15 @@ def __main():
 
     print()
 
-    raise NotImplementedError
+    items = [(1, 2),
+             (9, 3),
+             (8, 1),
+             (3, 2),
+             (7, -1)
+             ]
+
+    kdt = KDTree(items)
+    print(kdt)
 
     print()
 

@@ -17,7 +17,7 @@ class _KDNode:
 class KDTree:
 
     def __init__(self, items):
-        # NOTE: items need to all have the same dimention
+        # NOTE: items need to all have the same dimension
         items = list(items)
         dim = len(items[0])
 

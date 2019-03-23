@@ -91,13 +91,20 @@ class _BaseLinkedList:
 
         raise NotImplementedError()
 
-    def contains(self, val, getter=lambda x: x):
+    def contains(self, key, getter=lambda x: x):
         node = self.head
         while node:
-            if getter(node.val) == val:
+            if getter(node.val) == key:
                 return True
             node = node.next
         return False
+
+    def replace(self, key, val, getter=lambda x: x):
+        node = self.head
+        while node:
+            if getter(node.val) == key:
+                node.val = val
+            node = node.next
 
 
 #: class defs

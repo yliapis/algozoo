@@ -1,16 +1,6 @@
 
 
-#: Node def
-
-
-class _dict_node:
-
-    def __init__(self, hash_id, key, val, next=None):
-
-        self.hash_id = hash_id
-        self.key = key
-        self.val = val
-        self.next = None
+from algozoo.core.linked_list import SinglyLinkedList
 
 
 #: Dictionary def
@@ -34,25 +24,19 @@ class Dictionary:
 
         idx = hash_id % self.size
 
+        item = (hash_id, key, val)
+
         if self.table[idx] is None:
-            self.table[idx] = _dict_node(hash_id, key, val)
+            sll = SinglyLinkedList()
+            sll.insert(item)
+            self.table[idx] = sll
             self.cardinality += 1
         else:
-            node = self.table[idx]
-            while True:
-                # check if value has already been added,
-                # and modify accordingly
-                if node.key == key:
-                    node.val = val
-                    return
-                # check if there is another node in the chain
-                if node.next:
-                    node = node.next
-                # if not, break and add it
-                else:
-                    break
-            node.next = _dict_node(hash_id, key, val)
-            self.cardinality += 1
+            sll = self.table[idx]
+            success = sll.replace(hash_id, item, getter=lambda x: x[0])
+            if not success:
+                sll.insert(item)
+                self.cardinality += 1
 
     def __getitem__(self, key):
 
@@ -63,14 +47,13 @@ class Dictionary:
 
         idx = hash_id % self.size
 
-        if self.table[idx] is None:
+        sll = self.table[idx]
+        if sll is None:
             raise KeyError("Key {} does not exist".format(key))
 
-        node = self.table[idx]
-        while node:
-            if node.hash_id == hash_id:
-                return node.val
-            node = node.next
+        item = sll.getitem(hash_id, getter=lambda x: x[0])
+        if item:
+            return item[2]
 
         raise KeyError("Key {} does not exist".format(key))
 
@@ -84,73 +67,53 @@ class Dictionary:
 
         idx = hash_id % self.size
 
-        if self.table[idx] is None:
+        sll = self.table[idx]
+        if sll is None:
             raise KeyError("Key {} does not exist".format(key))
 
-        root_node = self.table[idx]
-        prev_node = None
-        node = root_node
-        while node:
-            if node.key == key:
-                if node is root_node:
-                    self.table[idx] = None
-                else:
-                    prev_node.next = node.next
-                self.cardinality -= 1
-                return
-            else:
-                prev_node = node
-                node = node.next
-
-        raise KeyError("Key {} does not exist".format(key))
+        success = sll.delitem(hash_id, getter=lambda x: x[0])
+        if not success:
+            raise KeyError("Key {} does not exist".format(key))
+        else:
+            self.cardinality -= 1
 
     def __iter__(self):
-
         for entry in self.table:
-            while entry:
-                yield entry.key, entry.val
-                entry = entry.next
+            if entry:
+                for item in iter(entry):
+                    yield (item[1], item[2])
 
     def __len__(self):
-
         return self.cardinality
 
     def __repr__(self):
-
-        dict_items = ["{!r}: {!r}".format(key, val) for key, val
-                      in self]
-
-        dict_str = "Dictionary(" + ", ".join(dict_items) + ")"
-
+        dict_items = ", ".join(["{!r}: {!r}".format(key, val) for
+                                key, val in self])
+        dict_str = "{name}({items})".format(name=self.__class__.__name__,
+                                            items=dict_items)
         return dict_str
 
     def __str__(self):
-
         return self.__repr__()
 
     def keys(self):
-
-        for entry in self.table:
-            while entry:
-                yield entry.key
-                entry = entry.next
+        for pair in self:
+            yield pair[0]
 
     def values(self):
-
-        for entry in self.table:
-            while entry:
-                yield entry.val
-                entry = entry.next
+        for pair in self:
+            yield pair[1]
 
     def items(self):
-
-        return self.__iter__()
+        yield from self.__iter__()
 
 
 #: for testing
 
 
-def _main():
+def __main():
+
+    print()
 
     d = Dictionary()
     d[0] = 1
@@ -165,7 +128,9 @@ def _main():
     print(d)
     print(len(d))
 
+    print()
+
 
 if __name__ == '__main__':
 
-    _main()
+    __main()

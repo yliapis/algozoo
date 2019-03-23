@@ -68,25 +68,15 @@ class Dictionary:
 
         idx = hash_id % self.size
 
-        if self.table[idx] is None:
+        sll = self.table[idx]
+        if sll is None:
             raise KeyError("Key {} does not exist".format(key))
 
-        root_node = self.table[idx]
-        prev_node = None
-        node = root_node
-        while node:
-            if node.key == key:
-                if node is root_node:
-                    self.table[idx] = None
-                else:
-                    prev_node.next = node.next
-                self.cardinality -= 1
-                return
-            else:
-                prev_node = node
-                node = node.next
-
-        raise KeyError("Key {} does not exist".format(key))
+        success = sll.delitem(hash_id, getter=lambda x: x[0])
+        if not success:
+            raise KeyError("Key {} does not exist".format(key))
+        else:
+            self.cardinality -= 1
 
     def __iter__(self):
         for entry in self.table:
@@ -116,7 +106,7 @@ class Dictionary:
             yield pair[1]
 
     def items(self):
-        yield from self
+        yield from self.__iter__()
 
 
 #: for testing
@@ -133,7 +123,7 @@ def __main():
     d[2] = 4
     print(d[0])
     print(d[2])
-    # del d[2]
+    del d[2]
 
     print()
     print(d)

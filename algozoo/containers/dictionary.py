@@ -51,7 +51,6 @@ class Dictionary:
         if sll is None:
             raise KeyError("Key {} does not exist".format(key))
 
-
         item = sll.getitem(hash_id, getter=lambda x: x[0])
         if item:
             return item[2]
@@ -88,7 +87,7 @@ class Dictionary:
         return self.cardinality
 
     def __repr__(self):
-        dict_items = ", ".join(["{!r}: {!r}".format(key, val) for 
+        dict_items = ", ".join(["{!r}: {!r}".format(key, val) for
                                 key, val in self])
         dict_str = "{name}({items})".format(name=self.__class__.__name__,
                                             items=dict_items)

@@ -113,7 +113,7 @@ class _BaseLinkedList:
         while node:
             if getter(node.val) == key:
                 return node.val
-            node=node.next
+            node = node.next
         return None
 
     def delitem(self, key, getter=lambda x: x):

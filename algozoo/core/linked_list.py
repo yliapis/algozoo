@@ -104,7 +104,9 @@ class _BaseLinkedList:
         while node:
             if getter(node.val) == key:
                 node.val = val
+                return True
             node = node.next
+        return False
 
 
 #: class defs

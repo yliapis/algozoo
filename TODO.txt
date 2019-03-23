@@ -8,3 +8,5 @@ selection
 merging
 topological sort
 graphs
+MinHash
+

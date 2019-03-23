@@ -108,6 +108,13 @@ class _BaseLinkedList:
             node = node.next
         return False
 
+    def getitem(self, key, getter=lambda x: x):
+        node = self.head
+        while node:
+            if getter(node.val) == key:
+                return node.val
+        return None
+
 
 #: class defs
 

@@ -35,6 +35,14 @@ class _BaseLinkedList:
             for item in items:
                 self.insert(item)
 
+    def __contains__(self, val):
+        node = self.head
+        while node:
+            if node.val == val:
+                return True
+            node = node.next
+        return False
+
     def __iter__(self):
 
         node = self.head
@@ -82,6 +90,14 @@ class _BaseLinkedList:
     def remove(self, pos=0):
 
         raise NotImplementedError()
+
+    def contains(self, val, getter=lambda x: x):
+        node = self.head
+        while node:
+            if getter(node.val) == val:
+                return True
+            node = node.next
+        return False
 
 
 #: class defs

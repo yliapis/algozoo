@@ -8,51 +8,63 @@ from collections import defaultdict
 
 class Graph:
 
-    def __init__(self):
+    def __init__(self, directed=True):
 
-        self._graph_lut = defaultdict(list)
+        self._graph_lut = defaultdict(set)
+        self.directed = directed
 
     # __ methods
 
     def __contains__(self, node_id):
-        raise NotImplementedError
+        return node_id in self._graph_lut
+
+    def __len__(self):
+        return len(self._graph_lut)
 
     # class methods:
     # construct from various representations
 
     @classmethod
-    def from_edgelist(cls, edgelist):
-        self = cls()
+    def from_edgelist(cls, edgelist, *args, **kwargs):
+        self = cls(*args, **kwargs)
         for head, tail in edgelist:
             self.add_edge(head, tail)
         return self
 
     @classmethod
-    def from_adjacency_list(cls, adjacency_list):
-        self = cls()
+    def from_adjacency_list(cls, adjacency_list, *args, **kwargs):
+        self = cls(*args, **kwargs)
         for src, dsts in adjacency_list:
             self.add_edges(src, dsts)
         return self
 
     @classmethod
-    def from_adjacency_matrix(cls, root):
-        self = cls()
-        raise NotImplementedError
-        return self
+    def from_adjacency_matrix(cls, matrix, *args, **kwargs):
+        self = cls(*args, **kwargs)
+        N = len(matrix)
+        for m in range(N):
+            for n in range(N):
+                if matrix[m][n]:
+                    self.add_edge(m, n)
 
     @classmethod
-    def from_structure(cls, root):
-        self = cls()
+    def from_structure(cls, root, *args, **kwargs):
+        self = cls(*args, **kwargs)
         raise NotImplementedError
         return self
 
     # manipulation methods
 
     def add_edge(self, src, dst):
-        self._graph_lut[src].append(dst)
+        self._graph_lut[src].add(dst)
+        if not self.directed:
+            self._graph_lut[dst].add(src)
 
     def add_edges(self, src, dsts):
-        self._graph_lut[src].extend(dsts)
+        self._graph_lut[src].update(dsts)
+        if not self.directed:
+            for dst in dsts:
+                self._graph_lut[dst].add(src)
 
     # representation extraction methods
 
@@ -68,7 +80,13 @@ class Graph:
                 self._graph_lut.items()]
 
     def get_adjacency_matrix(self):
-        raise NotImplementedError
+        N = len(self)
+        matrix = [[0] * N for _ in range(N)]
+        for src, dsts in self._graph_lut:
+            for dst in dsts:
+                matrix[src][dst] = 1
+
+        return matrix
 
 
 #: for testing

@@ -65,14 +65,14 @@ def _tree_dfs_iter(root=None,
         return
 
     if order == "first":
-            yield value(root)
+        yield value(root)
     for node in key(root):
         yield from _tree_dfs_iter(node,
                                   key=key,
                                   value=value,
                                   order=order)
     if order == "last":
-            yield value(root)
+        yield value(root)
 
 
 def _tree_bfs_iter(root=None,

@@ -2,6 +2,7 @@
 
 from collections import defaultdict
 
+from algozoo.algorithms.search import bfs_iter, dfs_iter
 
 #: class def
 
@@ -46,6 +47,7 @@ class Graph:
             for n in range(N):
                 if matrix[m][n]:
                     self.add_edge(m, n)
+        return self
 
     @classmethod
     def from_structure(cls, root, *args, **kwargs):
@@ -88,6 +90,38 @@ class Graph:
 
         return matrix
 
+    # search methods
+
+    def _get_val(self, node_id):
+        return node_id
+
+    def _get_next(self, node_id):
+        return self._graph_lut[node_id]
+
+    def dfs(self, node_id):
+        yield from dfs_iter(root=node_id,
+                            value=self._get_val,
+                            key=self._get_next,
+                            mode="graph",
+                            order="first")
+
+    def bfs(self, node_id):
+        yield from bfs_iter(root=node_id,
+                            value=self._get_val,
+                            key=self._get_next,
+                            mode="graph")
+
+    def topological_sort(self, node_id):
+        raise NotImplementedError
+
+    # graph properties
+
+    def is_cyclic(self):
+        raise NotImplementedError
+
+    def is_directed(self):
+        return self.directed
+
 
 #: for testing
 
@@ -96,8 +130,20 @@ def __main():
 
     print()
 
-    raise NotImplementedError
+    mat = [[0, 1, 0, 1],
+           [0, 0, 1, 1],
+           [0, 0, 0, 1],
+           [0, 0, 0, 0]]
 
+    g = Graph.from_adjacency_matrix(mat)
+
+    print(g)
+    print()
+
+    print("DFS:", list(g.dfs(0)))
+    print()
+
+    print("BFS:", list(g.bfs(0)))
     print()
 
 

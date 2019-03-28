@@ -125,7 +125,7 @@ class Graph:
 
 class WeightedGraph:
 
-    __init__(self):
+    def __init__(self):
         raise NotImplementedError
 
 

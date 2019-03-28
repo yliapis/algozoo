@@ -123,6 +123,12 @@ class Graph:
         return self.directed
 
 
+class WeightedGraph:
+
+    __init__(self):
+        raise NotImplementedError
+
+
 #: for testing
 
 

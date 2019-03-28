@@ -4,6 +4,7 @@ from collections import defaultdict
 
 from algozoo.algorithms.search import bfs_iter, dfs_iter
 
+
 #: class def
 
 
@@ -112,6 +113,11 @@ class Graph:
                             mode="graph")
 
     def topological_sort(self, node_id):
+
+        if not self.is_directed():
+            raise Exception("topological_sort does not work "
+                            "for directed graphs")
+
         raise NotImplementedError
 
     # graph properties

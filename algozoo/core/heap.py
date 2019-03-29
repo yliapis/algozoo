@@ -1,12 +1,13 @@
 
 
-class FiniteHeap(object):
+class Heap(object):
 
-    def __init__(self, items=None, size=256,
+    def __init__(self, items=None, base_size=256,
                  comparator=lambda a, b: a > b):
-        self.table = [0] * size
+        self.table = [0] * base_size
         self.size = 0
-        self._table_size = size
+        self._table_size = base_size
+        self._base_size = base_size
         self.comparator = comparator
 
         if hasattr(items, '__iter__'):
@@ -29,11 +30,17 @@ class FiniteHeap(object):
     def __contains__(self):
         raise NotImplementedError
 
+    def _downscale(self):
+        self.table = self.table[:self._table_size // 2]
+
+    def _upscale(self):
+        self.table.extend([0] * self._table_size)
+
     def insert(self, val):
 
         ptr = self.size
         if ptr >= self._table_size:
-            raise NotImplementedError("element does not fit")
+            self._upscale()
 
         self.table[ptr] = val
         self.size += 1
@@ -78,6 +85,10 @@ class FiniteHeap(object):
             else:
                 break
 
+        if ((self.size // 4) < self._table_size and
+            self._table_size // 2 >= self._base_size):
+            self._downscale()
+
         return val
 
     def peak(self):
@@ -97,15 +108,15 @@ def _main():
 
     items = [1, 4, 2, 3, -1]
 
-    fh = FiniteHeap(items)
+    heap = Heap(items, base_size=2)
 
     print("items:", items)
-    print(fh)
+    print(heap)
     print()
 
     sorted_items = []
-    while len(fh) > 0:
-        sorted_items.append(fh.pop())
+    while len(heap) > 0:
+        sorted_items.append(heap.pop())
 
     print("sorted items:", sorted_items)
 

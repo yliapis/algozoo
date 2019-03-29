@@ -9,4 +9,3 @@ merging
 topological sort
 graphs
 MinHash
-priority queue

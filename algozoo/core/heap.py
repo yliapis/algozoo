@@ -2,11 +2,12 @@
 
 class FiniteHeap(object):
 
-    def __init__(self, items=None, size=256):
+    def __init__(self, items=None, size=256,
+                 comparator=lambda a, b: a > b):
         self.table = [0] * size
         self.size = 0
         self._table_size = size
-        self.comparator = lambda a, b: a > b
+        self.comparator = comparator
 
         if hasattr(items, '__iter__'):
             for item in items:
@@ -15,7 +16,7 @@ class FiniteHeap(object):
             raise Exception("items={} is not iterable".format(items))
 
     def __iter__(self):
-        raise NotImplementedError
+        yield from self.table[:self.size]
 
     def __repr__(self):
         return "{name}({items})".format(

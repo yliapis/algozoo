@@ -1,6 +1,6 @@
 
 
-from algozoo.core.heap import FiniteHeap
+from algozoo.core.heap import Heap
 
 
 #: class def
@@ -10,7 +10,7 @@ class PiorityQueue:
 
     def __init__(self, items=None):
 
-        self.heap = FiniteHeap(comparator=lambda pair1, pair2:
+        self.heap = Heap(comparator=lambda pair1, pair2:
                                pair1[0] > pair2[0])
 
         if hasattr(items, '__iter__'):

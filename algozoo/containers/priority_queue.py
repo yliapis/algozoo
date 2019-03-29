@@ -11,7 +11,7 @@ class PiorityQueue:
     def __init__(self, items=None):
 
         self.heap = Heap(comparator=lambda pair1, pair2:
-                               pair1[0] > pair2[0])
+                         pair1[0] > pair2[0])
 
         if hasattr(items, '__iter__'):
             self.enqueue_batch(items)

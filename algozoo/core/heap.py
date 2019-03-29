@@ -86,7 +86,7 @@ class Heap(object):
                 break
 
         if ((self.size // 4) < self._table_size and
-            self._table_size // 2 >= self._base_size):
+           self._table_size // 2 >= self._base_size):
             self._downscale()
 
         return val

@@ -14,7 +14,7 @@ class Heap(object):
             for item in items:
                 self.insert(item)
         elif items is not None:
-            raise Exception("items={} is not iterable".format(items))
+            raise ValueError("items={!r} is not iterable".format(items))
 
     def __iter__(self):
         yield from self.table[:self.size]

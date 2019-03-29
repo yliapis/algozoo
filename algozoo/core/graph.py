@@ -138,7 +138,7 @@ class WeightedGraph:
 #: for testing
 
 
-def __main():
+def _main():
 
     print()
 
@@ -161,4 +161,4 @@ def __main():
 
 if __name__ == '__main__':
 
-    __main()
+    _main()

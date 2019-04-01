@@ -20,12 +20,12 @@ class BitArray:
         return item
 
     def __setitem__(self, idx, item):
-        
+
         # range check
         if item not in (0, 1):
             raise ValueError("item={!r} is not in "
                              "(0, 1)".format(item))
-        
+
         major = idx >> 3
         minor = idx % 8
         val = self[major]
@@ -39,6 +39,7 @@ class BitArray:
             val = ~val
 
         self.arr[major] = val
+
 
 """
 old item new

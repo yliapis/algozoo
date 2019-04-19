@@ -4,11 +4,21 @@ class BitArray:
 
     def __init__(self, size=0):
 
-        self.arr = bytearray((size >> 3) + 1)
+        self.arr = bytearray((size // 3) + 1)
+        self.size = size
+
+    def __len__(self):
+        return self.size
+
+    def __iter__(self):
+        # can be thought of as little-endian
+        for shift in range(self.size):
+            bit = 1 << (shift % 8)
+            idx = shift // 8
+            yield 1 if (self.arr[idx] & bit) else 0
 
     def __repr__(self):
-        bit_str = ''.join(map(
-            lambda x: bin(x)[2:], self.arr))
+        bit_str = ''.join(map(repr, self))
         repr_str = "{name}({items})".format(
             name=self.__class__.__name__, items=bit_str)
         return repr_str
@@ -26,7 +36,7 @@ class BitArray:
             raise ValueError("item={!r} is not in "
                              "(0, 1)".format(item))
 
-        major = idx >> 3
+        major = idx // 8
         minor = idx % 8
         val = self[major]
         bit = 1 << minor
@@ -77,3 +87,17 @@ In [14]: a
 Out[14]: BitArray(10)
 
 """
+
+def _main():
+
+    arr = BitArray(9)
+
+    print(arr)
+    arr[3] = 1
+    # arr[0] = 1
+    print(arr)
+
+
+if __name__ == '__main__':
+
+    _main()

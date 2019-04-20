@@ -12,13 +12,11 @@ class BitArray:
 
     def __iter__(self):
         # can be thought of as little-endian
-        for shift in range(self.size):
-            bit = 1 << (shift % 8)
-            idx = shift // 8
-            yield 1 if (self.arr[idx] & bit) else 0
+        for i in range(self.size):
+            yield self[i]
 
     def __repr__(self):
-        bit_str = ''.join(map(repr, self))
+        bit_str = ''.join(map(lambda x: repr(int(x)), self))
         repr_str = "{name}({items})".format(
             name=self.__class__.__name__, items=bit_str)
         return repr_str
@@ -26,19 +24,18 @@ class BitArray:
     def __getitem__(self, idx):
         major = idx >> 3
         minor = idx % 8
-        item = ((self.arr[major] & (1 << minor)) >> minor)
+        item = ((self.arr[major] & (1 << minor)) > 0)
         return item
 
     def __setitem__(self, idx, item):
 
         # range check
-        if item not in (0, 1):
-            raise ValueError("item={!r} is not in "
-                             "(0, 1)".format(item))
+        if not isinstance(item, bool):
+            raise TypeError("item={!r} is not a bool".format(item))
 
         major = idx // 8
         minor = idx % 8
-        val = self[major]
+        val = self.arr[major]
         bit = 1 << minor
 
         if item:
@@ -51,50 +48,15 @@ class BitArray:
         self.arr[major] = val
 
 
-"""
-old item new
-
-0 0 0
-0 1 1
-1 0 0
-1 1 1
-
-NOTE: has bugs
-
-In [5]: a = BitArray(9)
-
-In [6]: a
-Out[6]: BitArray(00)
-
-In [7]: a[3] = 1
-
-In [8]: a
-Out[8]: BitArray(10000)
-
-In [9]: a[0] = 1
-
-In [10]: a
-Out[10]: BitArray(10)
-
-In [11]: a[3] = 1
-
-In [12]: a
-Out[12]: BitArray(10010)
-
-In [13]: a[0] = 1
-
-In [14]: a
-Out[14]: BitArray(10)
-
-"""
-
 def _main():
 
     arr = BitArray(9)
 
     print(arr)
-    arr[3] = 1
-    # arr[0] = 1
+    arr[3] = True
+    arr[0] = True
+    arr[7] = True
+    arr[0] = False
     print(arr)
 
 

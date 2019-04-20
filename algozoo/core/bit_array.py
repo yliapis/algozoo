@@ -2,6 +2,9 @@
 
 class BitArray:
 
+    # TODO: Maybe make it resizable?
+    # ie add push/pop methods
+
     def __init__(self, size=0):
 
         self.arr = bytearray((size // 3) + 1)
@@ -26,7 +29,7 @@ class BitArray:
         minor = idx % 8
         item = ((self.arr[major] & (1 << minor)) > 0)
         return item
-
+ 
     def __setitem__(self, idx, item):
 
         # range check

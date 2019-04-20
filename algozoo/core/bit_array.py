@@ -1,4 +1,5 @@
 
+
 class BitArray:
 
     # TODO: Maybe make it resizable?
@@ -28,7 +29,7 @@ class BitArray:
         minor = idx % 8
         item = ((self.arr[major] & (1 << minor)) > 0)
         return item
- 
+
     def __setitem__(self, idx, item):
 
         # range check

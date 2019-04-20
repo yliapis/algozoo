@@ -1,5 +1,4 @@
 
-
 from algozoo.core.linked_list import SinglyLinkedList
 
 

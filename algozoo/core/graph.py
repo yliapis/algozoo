@@ -1,12 +1,10 @@
 
-
 from collections import defaultdict
 
 from algozoo.algorithms.search import bfs_iter, dfs_iter
 
 
 #: class def
-
 
 class Graph:
 
@@ -136,7 +134,6 @@ class WeightedGraph:
 
 
 #: for testing
-
 
 def _main():
 

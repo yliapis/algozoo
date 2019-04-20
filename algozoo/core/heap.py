@@ -1,5 +1,4 @@
 
-
 class Heap(object):
 
     def __init__(self, items=None, base_size=256,
@@ -100,7 +99,6 @@ class Heap(object):
 
 
 #: for testing
-
 
 def _main():
 

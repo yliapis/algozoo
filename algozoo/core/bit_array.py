@@ -1,5 +1,4 @@
 
-
 class BitArray:
 
     # TODO: Maybe make it resizable?

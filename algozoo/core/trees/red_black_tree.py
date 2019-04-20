@@ -1,5 +1,4 @@
 
-
 from binary_search_tree import _TreeNode, BinarySearchTree
 
 
@@ -105,7 +104,6 @@ class RedBlackTree(BinarySearchTree):
 
 
 #: for testing
-
 
 def _main():
 

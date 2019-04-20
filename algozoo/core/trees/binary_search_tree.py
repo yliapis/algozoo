@@ -1,7 +1,5 @@
 
-
 #: Node def
-
 
 class _TreeNode:
 
@@ -12,7 +10,6 @@ class _TreeNode:
 
 
 #: Tree def
-
 
 class BinarySearchTree:
 
@@ -160,7 +157,6 @@ class BinarySearchTree:
 
 
 #: for testing
-
 
 def _main():
 

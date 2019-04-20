@@ -1,7 +1,5 @@
 
-
 #: Node defs
-
 
 class _single_node:
 
@@ -21,7 +19,6 @@ class _double_node:
 
 
 #: base class
-
 
 class _BaseLinkedList:
 
@@ -341,7 +338,6 @@ class DoublyLinkedList(_BaseLinkedList):
 
 
 #: for testing
-
 
 def _test_sll():
 

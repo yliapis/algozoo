@@ -117,8 +117,25 @@ def bfs_iter(root, mode="graph", *args, **kwargs):
                 "mode={mode}".format(mode=mode))
 
 
-#: for testing
+def binary_search(arr, target):
 
+    lower = 0
+    upper = len(arr) - 1
+
+    while lower <= upper:
+        mid = (lower + upper) // 2
+        item = arr[mid]
+        if item == target:
+            return mid
+        elif item < target:
+            lower = mid + 1
+        else:
+            upper = mid - 1
+
+    return -1
+
+
+#: for testing
 
 class __testNode:
 
@@ -163,6 +180,25 @@ def _test_bfs(tree):
     print(list(bfs_iter(tree)))
 
 
+def _test_binary_search():
+
+    print("binary search")
+
+    data1 = [1, 2, 2, 3, 4]
+    data2 = [0, 0, 0, 0, 8, 12]
+    data3 = [3]
+
+    print(data1, 2, binary_search(data1, 2))
+    print(data1, 4, binary_search(data1, 4))
+    print(data1, 1, binary_search(data1, 1))
+
+    print(data2, 0, binary_search(data2, 0))
+    print(data2, 12, binary_search(data2, 12))
+    print(data2, 11, binary_search(data2, 11))
+
+    print(data3, 3, binary_search(data3, 3))
+
+
 def _main():
 
     print()
@@ -175,6 +211,9 @@ def _main():
     print()
 
     _test_bfs(tree)
+    print()
+
+    _test_binary_search()
     print()
 
 
